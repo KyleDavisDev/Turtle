@@ -1,0 +1,13 @@
+{
+  "compilerOptions": {
+    "module": "commonjs",
+    "target": "es5",
+    "sourceMap": true,
+    "plugins": [
+      { "transform": "ts-auto-mock/transformer", "cacheBetweenTests": false },
+    ]
+  },
+  "exclude": [
+    "node_modules"
+  ]
+}
