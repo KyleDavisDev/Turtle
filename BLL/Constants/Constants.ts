@@ -24,7 +24,7 @@ class Constants {
   }
 
   public set maxGuesses(guesses: number) {
-    if (guesses < 0 || guesses > 10) {
+    if (guesses < 1 || guesses > 9) {
       throw new Error("The guess size must be greater than 0 and less than 10.");
     }
 
