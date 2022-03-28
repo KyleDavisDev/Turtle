@@ -16,4 +16,10 @@ describe("Constants should", () => {
 
     expect(sut.maxGuesses).toBe(DEFAULT_MAX_GUESSES);
   });
+
+  it("use default game name", () => {
+    const sut = new Constants();
+
+    expect(sut.gameName).toBe(GAME_NAME);
+  });
 });
