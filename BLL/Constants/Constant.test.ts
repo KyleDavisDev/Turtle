@@ -22,4 +22,37 @@ describe("Constants should", () => {
 
     expect(sut.gameName).toBe(GAME_NAME);
   });
+
+  it("throw error for word length that are too small", () => {
+    const sut = new Constants();
+
+    const newLengths = [0, -1, -2, -10];
+    newLengths.forEach(newLength => {
+      expect(() => {
+        sut.wordLength = newLength;
+      }).toThrow();
+    });
+  });
+
+  it("throw error for word length that are too large", () => {
+    const sut = new Constants();
+
+    const newLengths = [10, 15, 20, 100, 123123123];
+    newLengths.forEach(newLength => {
+      expect(() => {
+        sut.wordLength = newLength;
+      }).toThrow();
+    });
+  });
+
+  it("allow for word length reassignment", () => {
+    const sut = new Constants();
+
+    const newLengths = [1, 5, 7, 6];
+    newLengths.forEach(newLength => {
+      sut.wordLength = newLength;
+
+      expect(sut.wordLength).toBe(newLength);
+    });
+  });
 });
