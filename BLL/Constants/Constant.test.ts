@@ -55,4 +55,37 @@ describe("Constants should", () => {
       expect(sut.wordLength).toBe(newLength);
     });
   });
+
+  it("throw error for guess amounts that are too small", () => {
+    const sut = new Constants();
+
+    const newLengths = [0, -1, -2, -10];
+    newLengths.forEach(newLength => {
+      expect(() => {
+        sut.maxGuesses = newLength;
+      }).toThrow();
+    });
+  });
+
+  it("throw error for guess amounts that are too large", () => {
+    const sut = new Constants();
+
+    const newLengths = [10, 15, 20, 100, 123123123];
+    newLengths.forEach(newLength => {
+      expect(() => {
+        sut.maxGuesses = newLength;
+      }).toThrow();
+    });
+  });
+
+  it("allow for guess amount reassignment", () => {
+    const sut = new Constants();
+
+    const newLengths = [1, 5, 7, 6];
+    newLengths.forEach(newLength => {
+      sut.maxGuesses = newLength;
+
+      expect(sut.maxGuesses).toBe(newLength);
+    });
+  });
 });
