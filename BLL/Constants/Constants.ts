@@ -3,7 +3,6 @@ const DEFAULT_MAX_GUESSES = 6;
 const GAME_NAME = "Turtle";
 
 class Constants {
-
   private _wordLength = DEFAULT_WORD_LENGTH;
   private _maxGuesses = DEFAULT_MAX_GUESSES;
   private _gameName = GAME_NAME;
@@ -17,7 +16,7 @@ class Constants {
   }
 
   public set wordLength(value: number) {
-    if (value < 0 || value > 10) {
+    if (value < 1 || value > 9) {
       throw new Error("The word size must be greater than 0 and less than 10.");
     }
 
