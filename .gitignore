@@ -1,0 +1,14 @@
+Turtle/node_modules/
+Turtle/.expo/
+Turtle/dist/
+Turtle/npm-debug.*
+Turtle/*.jks
+Turtle/*.p8
+Turtle/*.p12
+Turtle/*.key
+Turtle/*.mobileprovision
+Turtle/*.orig.*
+Turtle/web-build/
+
+# macOS
+Turtle/.DS_Store
