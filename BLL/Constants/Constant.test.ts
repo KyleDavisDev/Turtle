@@ -9,5 +9,11 @@ describe("Constants should", () => {
     const sut = new Constants();
 
     expect(sut.wordLength).toBe(DEFAULT_WORD_LENGTH);
-  })
-})
+  });
+
+  it("use default max guesses", () => {
+    const sut = new Constants();
+
+    expect(sut.maxGuesses).toBe(DEFAULT_MAX_GUESSES);
+  });
+});
