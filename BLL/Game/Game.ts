@@ -9,7 +9,7 @@ class Game {
   private _constants: IConstant;
 
   constructor(params: GameParams) {
-    this._constants = params.constants ?? new Constants();
+    this._constants = params?.constants ?? new Constants();
   }
 
   public emptyGameBoard(): String[][] {
@@ -20,3 +20,5 @@ class Game {
     );
   }
 }
+
+export { Game };
