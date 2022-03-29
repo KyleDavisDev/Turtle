@@ -29,7 +29,7 @@ describe("Constants should", () => {
     const newLengths = [0, -1, -2, -10];
     newLengths.forEach(newLength => {
       expect(() => {
-        sut.wordLength = newLength;
+        sut.setWordLength(newLength);
       }).toThrow();
     });
   });
@@ -40,7 +40,7 @@ describe("Constants should", () => {
     const newLengths = [10, 15, 20, 100, 123123123];
     newLengths.forEach(newLength => {
       expect(() => {
-        sut.wordLength = newLength;
+        sut.setWordLength(newLength);
       }).toThrow();
     });
   });
@@ -50,7 +50,7 @@ describe("Constants should", () => {
 
     const newLengths = [1, 5, 7, 6];
     newLengths.forEach(newLength => {
-      sut.wordLength = newLength;
+      sut.setWordLength(newLength);
 
       expect(sut.wordLength).toBe(newLength);
     });
@@ -62,7 +62,7 @@ describe("Constants should", () => {
     const newLengths = [0, -1, -2, -10];
     newLengths.forEach(newLength => {
       expect(() => {
-        sut.maxGuesses = newLength;
+        sut.setMaxGuesses(newLength);
       }).toThrow();
     });
   });
@@ -73,7 +73,7 @@ describe("Constants should", () => {
     const newLengths = [10, 15, 20, 100, 123123123];
     newLengths.forEach(newLength => {
       expect(() => {
-        sut.maxGuesses = newLength;
+        sut.setMaxGuesses(newLength);
       }).toThrow();
     });
   });
@@ -83,7 +83,7 @@ describe("Constants should", () => {
 
     const newLengths = [1, 5, 7, 6];
     newLengths.forEach(newLength => {
-      sut.maxGuesses = newLength;
+      sut.setMaxGuesses(newLength);
 
       expect(sut.maxGuesses).toBe(newLength);
     });

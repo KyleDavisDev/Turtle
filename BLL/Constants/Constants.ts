@@ -13,7 +13,7 @@ class Constants implements IConstant {
     return this._wordLength;
   }
 
-  public set setWordLength(val: number) {
+  public setWordLength(val: number) {
     if (val < 1 || val > 9) {
       throw new Error("The word size must be greater than 0 and less than 10.");
     }
@@ -24,7 +24,7 @@ class Constants implements IConstant {
     return this._maxGuesses;
   }
 
-  public set setMaxGuesses(guesses: number) {
+  public setMaxGuesses(guesses: number) {
     if (guesses < 1 || guesses > 9) {
       throw new Error("The guess size must be greater than 0 and less than 10.");
     }
