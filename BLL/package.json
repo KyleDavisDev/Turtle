@@ -1,8 +1,8 @@
 {
-  "name": "final-project-KyleDavisDev",
+  "name": "final-project-KyleDavisDev-BLL",
   "version": "1.0.0",
   "scripts": {
-    "test": "jest"
+    "test": "../node_modules/.bin/jest"
   },
   "dependencies": {},
   "devDependencies": {
