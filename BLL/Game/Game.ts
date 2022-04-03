@@ -1,20 +1,20 @@
-import { IConstant } from "../Constants/IConstant";
-import { Constants } from "../Constants/Constants";
+import { ISettings } from "../Settings/ISettings";
+import { Settings } from "../Settings/Settings";
 import { IGame } from "./IGame";
 
 export interface GameParams {
-  constants?: IConstant;
+  constants?: ISettings;
   word?: string;
 }
 
 class Game implements IGame {
-  private _constants: IConstant;
+  private _constants: ISettings;
   private _boardState: String[][];
   private _curRow: Number;
   private _word: string;
 
   constructor(params: GameParams) {
-    this._constants = params?.constants ?? new Constants();
+    this._constants = params?.constants ?? new Settings();
     this._word = params?.word ?? this.newWord();
     this._boardState = this.getEmptyBoard();
     this._curRow = 0;
