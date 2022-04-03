@@ -1,3 +1,3 @@
-export interface IStrategy {
+export interface INewWordStrategy {
   getWord: (length: number) => string;
 }
