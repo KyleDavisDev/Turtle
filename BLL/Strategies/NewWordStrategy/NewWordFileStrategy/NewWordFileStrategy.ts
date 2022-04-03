@@ -1,5 +1,4 @@
 import { INewWordStrategy } from "../INewWordStrategy";
-import possibleWords from "./words.json";
 import { ISettings } from "../../../Settings/ISettings";
 
 export interface NewWordFileStrategyParams {
@@ -12,7 +11,7 @@ class NewWordFileStrategy implements INewWordStrategy {
   private _settings: ISettings;
 
   constructor(params: NewWordFileStrategyParams) {
-    this._possibleWords = params?.possibleWords ?? possibleWords;
+    this._possibleWords = params?.possibleWords;
     this._settings = params.settings;
   }
 
