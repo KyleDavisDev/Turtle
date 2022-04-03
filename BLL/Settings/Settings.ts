@@ -1,10 +1,10 @@
-import { IConstant } from "./IConstant";
+import { ISettings } from "./ISettings";
 
 const DEFAULT_WORD_LENGTH = 5;
 const DEFAULT_MAX_GUESSES = 6;
 const GAME_NAME = "Turtle";
 
-class Constants implements IConstant {
+class Settings implements ISettings {
   private _wordLength = DEFAULT_WORD_LENGTH;
   private _maxGuesses = DEFAULT_MAX_GUESSES;
   private _gameName = GAME_NAME;
@@ -37,4 +37,4 @@ class Constants implements IConstant {
   }
 }
 
-export { Constants };
+export { Settings };

@@ -1,4 +1,4 @@
-export interface IConstant {
+export interface ISettings {
   wordLength: number;
 
   setWordLength(val: number);
