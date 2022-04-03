@@ -3,22 +3,24 @@ import { createMock } from "ts-auto-mock";
 
 const { Game } = require("./Game.ts");
 
-describe("Game should", () => {
-  it("initialize without error", () => {
-    const sut = new Game();
+describe("Game", () => {
+  it("should initialize without error", () => {
+    // Given
+    const moqSettings = createMock<ISettings>();
+    const wordToGuess = "temp";
+    const sut = new Game({ settings: moqSettings, wordToGuess });
 
+    // Then
     expect(sut).not.toBe(null);
   });
 
-  it("throw error on empty guess", () => {
-    const moqConstants = createMock<ISettings>();
-    // moqConstants.wordLength = 5;
-
-    const sut = new Game({ constants: moqConstants });
+  it("should throw error on empty guess", () => {
+    // Given
+    const moqSettings = createMock<ISettings>();
+    const sut = new Game({ settings: moqSettings });
 
     expect(() => {
       sut.guessWord();
     }).toThrow();
-    // expect(sut).not.toBe(null);
   });
 });
