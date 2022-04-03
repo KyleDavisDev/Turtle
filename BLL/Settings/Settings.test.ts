@@ -8,19 +8,19 @@ describe("Settings should", () => {
   it("use default word length", () => {
     const sut = new Settings();
 
-    expect(sut.wordLength).toBe(DEFAULT_WORD_LENGTH);
+    expect(sut.getWordLength).toBe(DEFAULT_WORD_LENGTH);
   });
 
   it("use default max guesses", () => {
     const sut = new Settings();
 
-    expect(sut.maxGuesses).toBe(DEFAULT_MAX_GUESSES);
+    expect(sut.getMaxGuesses).toBe(DEFAULT_MAX_GUESSES);
   });
 
   it("use default game name", () => {
     const sut = new Settings();
 
-    expect(sut.gameName).toBe(GAME_NAME);
+    expect(sut.getGameName).toBe(GAME_NAME);
   });
 
   it("throw error for word length that are too small", () => {
@@ -52,7 +52,7 @@ describe("Settings should", () => {
     newLengths.forEach(newLength => {
       sut.setWordLength(newLength);
 
-      expect(sut.wordLength).toBe(newLength);
+      expect(sut.getWordLength).toBe(newLength);
     });
   });
 
@@ -85,7 +85,7 @@ describe("Settings should", () => {
     newLengths.forEach(newLength => {
       sut.setMaxGuesses(newLength);
 
-      expect(sut.maxGuesses).toBe(newLength);
+      expect(sut.getMaxGuesses).toBe(newLength);
     });
   });
 });

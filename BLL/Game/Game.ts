@@ -28,8 +28,8 @@ class Game implements IGame {
   }
 
   private getEmptyBoard(): String[][] {
-    return Array.from({ length: this._constants.maxGuesses }, () =>
-      Array.from({ length: this._constants.wordLength }, () => {
+    return Array.from({ length: this._constants.getMaxGuesses }, () =>
+      Array.from({ length: this._constants.getWordLength }, () => {
         return "";
       })
     );
@@ -45,8 +45,8 @@ class Game implements IGame {
 
   private validateWordGuess(word: string) {
     if (!word) throw new Error("You must provide a guess!");
-    if (word.length < this._constants.wordLength) throw new Error("Guess too short!");
-    if (word.length > this._constants.wordLength) throw new Error("Guess too long!");
+    if (word.length < this._constants.getWordLength) throw new Error("Guess too short!");
+    if (word.length > this._constants.getWordLength) throw new Error("Guess too long!");
   }
 
   getBoardState(): String[][] {

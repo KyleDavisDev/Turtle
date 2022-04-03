@@ -1,11 +1,11 @@
 export interface ISettings {
-  wordLength: number;
+  getWordLength: number;
 
   setWordLength(val: number);
 
-  maxGuesses: number;
+  getMaxGuesses: number;
 
   setMaxGuesses(val: number);
 
-  gameName: string;
+  getGameName: string;
 }
