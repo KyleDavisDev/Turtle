@@ -5,3 +5,5 @@ class ValidateWordAPIStrategy implements IValidateWordStrategy {
     return false;
   }
 }
+
+export { ValidateWordAPIStrategy };
