@@ -5,9 +5,10 @@ describe("ValidateWordFileStrategy", () => {
   const possibleWordList = ["test", "cider", "apple", "hello", "world"];
 
   it("should throw error when no word is passed", () => {
+    // Given
     const params: ValidateWordFileStrategyParams = { possibleWords: emptyList };
     const sut = new ValidateWordFileStrategy(params);
-
+    
     expect(() => {
       sut.isValidWord(null);
     }).toThrow();
