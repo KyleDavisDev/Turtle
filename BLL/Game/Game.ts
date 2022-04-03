@@ -43,7 +43,7 @@ class Game implements IGame {
     return results;
   }
 
-  private validateWordGuess(word: string) {
+  private validateWordGuess(word: string): void {
     if (!word) throw new Error("You must provide a guess!");
     if (word.length < this._settings.getWordLength) throw new Error("Guess too short!");
     if (word.length > this._settings.getWordLength) throw new Error("Guess too long!");
