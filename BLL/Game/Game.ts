@@ -20,13 +20,6 @@ class Game implements IGame {
     this._curRow = 0;
   }
 
-  public newGame(): void {
-    // reset the board
-    this._boardState = this.getEmptyBoard();
-    this._curRow = 0;
-    this._wordToGuess = this.newWord();
-  }
-
   private getEmptyBoard(): String[][] {
     return Array.from({ length: this._settings.getMaxGuesses }, () =>
       Array.from({ length: this._settings.getWordLength }, () => {
@@ -51,11 +44,6 @@ class Game implements IGame {
 
   getBoardState(): String[][] {
     return this._boardState;
-  }
-
-  private newWord() {
-    // TODO: generate(?) word here
-    return "cheese";
   }
 }
 
