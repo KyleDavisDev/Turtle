@@ -3,19 +3,19 @@ import { Settings } from "../Settings/Settings";
 import { IGame } from "./IGame";
 
 export interface GameParams {
-  constants?: ISettings;
-  word?: string;
+  settings: ISettings;
+  wordToGuess: string;
 }
 
 class Game implements IGame {
-  private _constants: ISettings;
+  private _settings: ISettings;
   private _boardState: String[][];
   private _curRow: Number;
-  private _word: string;
+  private _wordToGuess: string;
 
   constructor(params: GameParams) {
-    this._constants = params?.constants ?? new Settings();
-    this._word = params?.word ?? this.newWord();
+    this._settings = params.settings;
+    this._wordToGuess = params.wordToGuess;
     this._boardState = this.getEmptyBoard();
     this._curRow = 0;
   }
@@ -24,12 +24,12 @@ class Game implements IGame {
     // reset the board
     this._boardState = this.getEmptyBoard();
     this._curRow = 0;
-    this._word = this.newWord();
+    this._wordToGuess = this.newWord();
   }
 
   private getEmptyBoard(): String[][] {
-    return Array.from({ length: this._constants.getMaxGuesses }, () =>
-      Array.from({ length: this._constants.getWordLength }, () => {
+    return Array.from({ length: this._settings.getMaxGuesses }, () =>
+      Array.from({ length: this._settings.getWordLength }, () => {
         return "";
       })
     );
@@ -45,8 +45,8 @@ class Game implements IGame {
 
   private validateWordGuess(word: string) {
     if (!word) throw new Error("You must provide a guess!");
-    if (word.length < this._constants.getWordLength) throw new Error("Guess too short!");
-    if (word.length > this._constants.getWordLength) throw new Error("Guess too long!");
+    if (word.length < this._settings.getWordLength) throw new Error("Guess too short!");
+    if (word.length > this._settings.getWordLength) throw new Error("Guess too long!");
   }
 
   getBoardState(): String[][] {
