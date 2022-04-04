@@ -2,7 +2,8 @@
   "name": "final-project-KyleDavisDev-BLL",
   "version": "1.0.0",
   "scripts": {
-    "test": "./node_modules/.bin/jest"
+    "test": "./node_modules/.bin/jest",
+    "build": "tsc --build"
   },
   "dependencies": {},
   "devDependencies": {
