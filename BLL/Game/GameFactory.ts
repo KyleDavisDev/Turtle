@@ -16,15 +16,16 @@ import scrabbleWords from "../Strategies/ValidateWordStrategy/ValidateWordFileSt
 import badwords from "../Strategies/ValidateWordStrategy/ValidateWordFileStrategy/badWords.json";
 import { ValidateWordAPIStrategy } from "../Strategies/ValidateWordStrategy/ValidateWordAPIStrategy/ValidateWordAPIStrategy";
 import { NewWordAPIStrategy } from "../Strategies/NewWordStrategy/NewWordAPIStrategy/NewWordAPIStrategy";
+import { IGameFactory } from "./IGameFactory";
 
 enum gameModes {
-  "standard" = "standard",
-  "offline" = "offline",
-  "online" = "online",
-  "badWords" = "badWords"
+  standard = "standard",
+  offline = "offline",
+  online = "online",
+  badWords = "badWords"
 }
 
-class GameFactory {
+class GameFactory implements IGameFactory {
   private _wordToFind: INewWordStrategy;
   private _possibleWords: IValidateWordStrategy;
   private _gameModesSelected: gameModes[];
