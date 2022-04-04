@@ -1,5 +1,5 @@
 export interface IGame {
-  guessWord(word: string): String[];
+  guessWord(word: string): string[];
 
-  getBoardState(): String[][];
+  getBoardState(): string[][];
 }

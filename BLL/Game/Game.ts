@@ -1,6 +1,6 @@
 import { ISettings } from "../Settings/ISettings";
-import { Settings } from "../Settings/Settings";
 import { IGame } from "./IGame";
+import { IValidateWordStrategy } from "../Strategies/ValidateWordStrategy/IValidateWordStrategy";
 
 export interface GameParams {
   settings: ISettings;
@@ -9,9 +9,10 @@ export interface GameParams {
 
 class Game implements IGame {
   private _settings: ISettings;
-  private _boardState: String[][];
+  private _boardState: string[][];
   private _curRow: Number;
   private _wordToGuess: string;
+  private _wordValidator: IValidateWordStrategy;
 
   constructor(params: GameParams) {
     this._settings = params.settings;
@@ -20,7 +21,7 @@ class Game implements IGame {
     this._curRow = 0;
   }
 
-  private getEmptyBoard(): String[][] {
+  private getEmptyBoard(): string[][] {
     return Array.from({ length: this._settings.getMaxGuesses }, () =>
       Array.from({ length: this._settings.getWordLength }, () => {
         return "";
@@ -29,20 +30,28 @@ class Game implements IGame {
   }
 
   public guessWord(word: string) {
-    this.validateWordGuess(word.trim());
+    this.verifyWord(word.trim());
+    this.validateWord(word.trim());
 
     let results = [];
 
     return results;
   }
 
-  private validateWordGuess(word: string): void {
-    if (!word) throw new Error("You must provide a guess!");
+  // Confirm that the word follows the rules of the game
+  private verifyWord(word: string) {
     if (word.length < this._settings.getWordLength) throw new Error("Guess too short!");
     if (word.length > this._settings.getWordLength) throw new Error("Guess too long!");
   }
 
-  getBoardState(): String[][] {
+  // Confirm that the word exists
+  private validateWord(word: string): void {
+    if (!this._wordValidator.isValidWord(word)) {
+      throw new Error("Your word is not valid.");
+    }
+  }
+
+  getBoardState(): string[][] {
     return this._boardState;
   }
 }
