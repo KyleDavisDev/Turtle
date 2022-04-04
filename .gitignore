@@ -1,5 +1,6 @@
 node_modules/
 BLL/node_modules/
+BLL/dist
 Turtle/node_modules/
 Turtle/.expo/
 Turtle/dist/
