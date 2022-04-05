@@ -32,10 +32,10 @@ class GameFactory implements IGameFactory {
 
   standardGame = (): IGame => {
     const settings: ISettings = new Settings();
-    const wordToFind: INewWordStrategy = new NewWordFileStrategy({ possibleWords: wordsToGuessFrom, settings });
+    const newWordStrategy: INewWordStrategy = new NewWordFileStrategy({ possibleWords: wordsToGuessFrom, settings });
     const possibleWords: IValidateWordStrategy = new ValidateWordFileStrategy({ possibleWords: scrabbleWords });
 
-    const wordToGuess: string = wordToFind.getWord();
+    const wordToGuess: string = newWordStrategy.getWord();
     const game: IGame = new Game({ wordToGuess, settings, validateWordStrategy: possibleWords });
 
     this._gameModesSelected.push(gameModes.standard);
@@ -45,10 +45,10 @@ class GameFactory implements IGameFactory {
 
   offlineMode = (): IGame => {
     const settings: ISettings = new Settings();
-    const wordToFind: INewWordStrategy = new NewWordFileStrategy({ possibleWords: wordsToGuessFrom, settings });
+    const newWordStrategy: INewWordStrategy = new NewWordFileStrategy({ possibleWords: wordsToGuessFrom, settings });
     const possibleWords: IValidateWordStrategy = new ValidateWordFileStrategy({ possibleWords: scrabbleWords });
 
-    const wordToGuess: string = wordToFind.getWord();
+    const wordToGuess: string = newWordStrategy.getWord();
     const game: IGame = new Game({ wordToGuess, settings, validateWordStrategy: possibleWords });
 
     this._gameModesSelected.push(gameModes.offline);
@@ -57,10 +57,11 @@ class GameFactory implements IGameFactory {
 
   badWordsMode = (): IGame => {
     const settings: ISettings = new Settings();
-    const wordToFind: INewWordStrategy = new NewWordFileStrategy({ possibleWords: wordsToGuessFrom, settings });
+    const newWordStrategy: INewWordStrategy = new NewWordFileStrategy({ possibleWords: wordsToGuessFrom, settings });
     const possibleWords: IValidateWordStrategy = new ValidateWordFileStrategy({ possibleWords: badwords });
 
-    const wordToGuess: string = wordToFind.getWord();
+    const wordToGuess: string = newWordStrategy.getWord();
+    console.log(wordToGuess);
     const game: IGame = new Game({ wordToGuess, settings, validateWordStrategy: possibleWords });
 
     this._gameModesSelected.push(gameModes.badWords);
@@ -70,10 +71,10 @@ class GameFactory implements IGameFactory {
 
   onlineMode = (): IGame => {
     const settings: ISettings = new Settings();
-    const wordToFind: INewWordStrategy = new NewWordAPIStrategy();
+    const newWordStrategy: INewWordStrategy = new NewWordAPIStrategy();
     const possibleWords: IValidateWordStrategy = new ValidateWordAPIStrategy();
 
-    const wordToGuess: string = wordToFind.getWord();
+    const wordToGuess: string = newWordStrategy.getWord();
     const game: IGame = new Game({ wordToGuess, settings, validateWordStrategy: possibleWords });
 
     this._gameModesSelected.push(gameModes.online);

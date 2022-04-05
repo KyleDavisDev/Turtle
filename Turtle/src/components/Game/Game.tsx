@@ -45,15 +45,21 @@ const Game = (props: IGameProps) => {
       currentGuess.length === 0 ? setShouldAnimateRow(true) : setShouldAnimateRow(false);
       setShouldAnimateCell(false);
     } else if (key === "Enter".toLowerCase()) {
-      // const isGuessRequiredLength = currentGuess.length === wordToGuessLength;
-      // if (isGuessRequiredLength) {
-      //   newFrame[curRow] = checkAgainstWord(newFrame[curRow]);
-      //   setCurRow(curRow + 1);
-      //   setShouldAnimateCell(false);
-      // } else {
-      //   setShouldAnimateCell(false);
-      //   setShouldAnimateRow(true);
-      // }
+      const isGuessRequiredLength = currentGuess.length === wordToGuessLength;
+      if (isGuessRequiredLength) {
+        try {
+          const tmp = gameBLL.guessWord(currentGuess);
+          console.log(tmp);
+        } catch (e) {
+          console.log(e);
+        }
+        // newFrame[curRow] = checkAgainstWord(newFrame[curRow]);
+        setCurRow(curRow + 1);
+        setShouldAnimateCell(false);
+      } else {
+        setShouldAnimateCell(false);
+        setShouldAnimateRow(true);
+      }
     } else {
       // Letters here
       const isGuessBeforeEnd = currentGuess.length < wordToGuessLength;
