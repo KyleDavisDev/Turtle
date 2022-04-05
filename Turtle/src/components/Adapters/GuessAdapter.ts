@@ -1,0 +1,6 @@
+class GuessAdapter {
+  
+
+}
+
+export { GuessAdapter }
