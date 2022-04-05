@@ -2,9 +2,10 @@ import { ISettings } from "../Settings/ISettings";
 import { IGame } from "./IGame";
 import { IValidateWordStrategy } from "../Strategies/ValidateWordStrategy/IValidateWordStrategy";
 
-export interface GameParams {
+export interface IGameParams {
   settings: ISettings;
   wordToGuess: string;
+  validateWordStrategy: IValidateWordStrategy;
 }
 
 class Game implements IGame {
@@ -14,11 +15,12 @@ class Game implements IGame {
   private _wordToGuess: string;
   private _wordValidator: IValidateWordStrategy;
 
-  constructor(params: GameParams) {
+  constructor(params: IGameParams) {
     this._settings = params.settings;
     this._wordToGuess = params.wordToGuess;
     this._boardState = this.getEmptyBoard();
     this._curRow = 0;
+    this._wordValidator = params.validateWordStrategy;
   }
 
   private getEmptyBoard(): string[][] {
@@ -29,23 +31,24 @@ class Game implements IGame {
     );
   }
 
-  public guessWord(word: string) {
-    this.verifyWord(word.trim());
+  public guessWord(word: string): string[] {
     this.validateWord(word.trim());
+    this.verifyWord(word);
 
-    let results = [];
+    let results: string[] = [];
 
     return results;
   }
 
   // Confirm that the word follows the rules of the game
-  private verifyWord(word: string) {
+  private validateWord(word: string): void {
+    if (word.length === 0) throw new Error("You must provide a non-empty word to guess!");
     if (word.length < this._settings.getWordLength) throw new Error("Guess too short!");
     if (word.length > this._settings.getWordLength) throw new Error("Guess too long!");
   }
 
   // Confirm that the word exists
-  private validateWord(word: string): void {
+  private verifyWord(word: string) {
     if (!this._wordValidator.isValidWord(word)) {
       throw new Error("Your word is not valid.");
     }

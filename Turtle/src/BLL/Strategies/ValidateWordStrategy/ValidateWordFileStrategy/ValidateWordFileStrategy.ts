@@ -11,7 +11,7 @@ class ValidateWordFileStrategy implements IValidateWordStrategy {
     this._words = new Set<string>(params.possibleWords);
   }
 
-  isValidWord(word?: string): boolean {
+  isValidWord(word?: string | null): boolean {
     if (!word) throw new Error("You must provide a word to validate against");
 
     return this._words.has(word.toLowerCase());

@@ -2,16 +2,22 @@ import { ValidateWordFileStrategy, ValidateWordFileStrategyParams } from "./Vali
 
 describe("ValidateWordFileStrategy", () => {
   const emptyList: string[] = [];
+  const invalidWords = [null, "", undefined];
   const possibleWordList = ["test", "cider", "apple", "hello", "world"];
 
   it("should throw error when no word is passed", () => {
     // Given
     const params: ValidateWordFileStrategyParams = { possibleWords: emptyList };
     const sut = new ValidateWordFileStrategy(params);
-    
-    expect(() => {
-      sut.isValidWord(null);
-    }).toThrow();
+    const invalidWords = [null, "", undefined];
+
+
+    invalidWords.map(invalidWord => {
+      expect(() => {
+        sut.isValidWord(invalidWord);
+      }).toThrow();
+    })
+
   });
 
   it("should return false if word is not valid", () => {

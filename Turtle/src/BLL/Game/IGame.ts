@@ -1,5 +1,5 @@
 export interface IGame {
-  guessWord(word: string): string[];
+  guessWord: (word: string) => string[];
 
   getBoardState(): string[][];
 }
