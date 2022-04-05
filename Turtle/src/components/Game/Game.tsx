@@ -27,57 +27,78 @@ const Game = (props: IGameProps) => {
   const wordToGuessLength = boardFrame[0].length;
 
   const onKeyPress = (key: string) => {
-    const newFrame: ICell[][] = [...boardFrame];
-    const currentGuess = newFrame[curRow].reduce((prev, cur) => {
-      return prev + cur.value;
-    }, "");
     key = key.toLowerCase();
 
+    const userGuess = boardFrame[curRow].reduce((prev, cur) => {
+      return prev + cur.value;
+    }, "");
+
     if (key === "Delete".toLowerCase()) {
-      const isGuessLongerThanZero = currentGuess.length > 0;
-      if (isGuessLongerThanZero) {
-        // Set last character to empty space
-        const index = currentGuess.length - 1;
-        newFrame[curRow][index].value = "";
-      }
-
-      // animations
-      currentGuess.length === 0 ? setShouldAnimateRow(true) : setShouldAnimateRow(false);
-      setShouldAnimateCell(false);
+      onDeletePress(userGuess);
     } else if (key === "Enter".toLowerCase()) {
-      const isGuessRequiredLength = currentGuess.length === wordToGuessLength;
-      if (isGuessRequiredLength) {
-        try {
-          const guessWord = gameBLL.guessWord(currentGuess);
-
-        } catch (e) {
-          console.log(e);
-        }
-        // newFrame[curRow] = checkAgainstWord(newFrame[curRow]);
-        setCurRow(curRow + 1);
-        setShouldAnimateCell(false);
-      } else {
-        setShouldAnimateCell(false);
-        setShouldAnimateRow(true);
-      }
+      onEnterKeyPress(userGuess);
     } else {
-      // Letters here
-      const isGuessBeforeEnd = currentGuess.length < wordToGuessLength;
-      if (isGuessBeforeEnd) {
-        // set the frame to the letter
-        newFrame[curRow][currentGuess.length].value = key.toUpperCase();
-        setShouldAnimateCell(true);
-      } else {
-        setShouldAnimateCell(false);
-      }
+      onLetterPress(userGuess, key);
+    }
+  };
+
+  const onDeletePress = (word: string): void => {
+    const newFrame = [...boardFrame];
+
+    const isGuessLongerThanZero = word.length > 0;
+    if (isGuessLongerThanZero) {
+      // Set last character to empty space
+      const index = word.length - 1;
+      newFrame[curRow][index].value = "";
     }
 
-    // Update frame
+    // animations
+    // word.length === 0 ? setShouldAnimateRow(true) : setShouldAnimateRow(false);
+    setShouldAnimateCell(false);
+
+    setBoardFrame(newFrame);
+  };
+
+  const onEnterKeyPress = (word: string): void => {
+    const isGuessRequiredLength = word.length === wordToGuessLength;
+    if (isGuessRequiredLength) {
+      try {
+        const guessWord = gameBLL.guessWord(word);
+        setCurRow(curRow + 1);
+      } catch (e) {
+        console.log("Am i here????");
+        setShouldAnimateCell(false);
+        // setShouldAnimateRow(!shouldAnimateRow);
+      }
+    } else {
+      console.log("inside the enter but length not long enough");
+      setShouldAnimateRow(!shouldAnimateRow);
+    }
+  };
+
+  const onLetterPress = (wordBeingTyped: string, key: string): void => {
+    console.log("im not here, right?");
+    const newFrame = [...boardFrame];
+
+    // Letters here
+    const isGuessBeforeEnd = wordBeingTyped.length < wordToGuessLength;
+    if (isGuessBeforeEnd) {
+      // set the frame to the letter
+      newFrame[curRow][wordBeingTyped.length].value = key.toUpperCase();
+      setShouldAnimateCell(true);
+      // setShouldAnimateRow(false);
+    } else {
+      setShouldAnimateCell(false);
+      // setShouldAnimateRow(true);
+    }
+
     setBoardFrame(newFrame);
   };
 
   return (
     <>
+      {console.log(shouldAnimateRow)}
+
       <Board
         frame={boardFrame}
         shouldAnimateCell={shouldAnimateCell}

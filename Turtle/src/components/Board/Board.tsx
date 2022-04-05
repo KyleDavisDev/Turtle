@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Animated, StyleSheet, View } from "react-native";
 import { Row, ICell } from "./components/Row/Row";
 
@@ -26,7 +26,9 @@ const Board = (props: IBoardProps) => {
   return (
     <View>
       {frame.map((cells, index) => {
+        if (index > 0) return;
         const animateRow: boolean = shouldAnimateRow && index === curRow;
+        console.log(animateRow);
         const animateCell: boolean = shouldAnimateCell && index === curRow;
         return (
           <Animated.View key={`boardRow-${index}`} style={[animateRow && { transform: [{ translateX: shake }] }]}>
