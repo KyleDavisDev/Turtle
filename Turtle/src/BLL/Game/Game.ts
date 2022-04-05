@@ -1,5 +1,5 @@
 import { ISettings } from "../Settings/ISettings";
-import { IGame } from "./IGame";
+import { GuessResponse, IGame } from "./IGame";
 import { IValidateWordStrategy } from "../Strategies/ValidateWordStrategy/IValidateWordStrategy";
 
 export interface IGameParams {
@@ -11,7 +11,7 @@ export interface IGameParams {
 class Game implements IGame {
   private _settings: ISettings;
   private _boardState: string[][];
-  private _curRow: Number;
+  private _curRow: number;
   private _wordToGuess: string;
   private _wordValidator: IValidateWordStrategy;
 
@@ -31,12 +31,12 @@ class Game implements IGame {
     );
   }
 
-  public guessWord(userGuess: string): string[] {
+  public guessWord(userGuess: string): GuessResponse[] {
     this.validateWord(userGuess.trim());
     this.verifyWord(userGuess);
 
     userGuess = userGuess.toLowerCase();
-    let results: string[] = [];
+    let results: GuessResponse[] = [];
     for (let i = 0, len = userGuess.length; i < len; i++) {
       if (userGuess[i] === this._wordToGuess[i]) {
         // Letter in right place
@@ -46,9 +46,12 @@ class Game implements IGame {
         results[i] = "Y";
       } else {
         // Letter does not exist in the answer
-        results[i] = "R";
+        results[i] = "/";
       }
     }
+
+    this._boardState[this._curRow] = results;
+    this._curRow += 1;
 
     return results;
   }
