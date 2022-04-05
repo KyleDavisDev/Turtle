@@ -1,5 +1,7 @@
+export type GuessResponse = "Y" | "G" | "/";
+
 export interface IGame {
-  guessWord: (word: string) => string[];
+  guessWord: (word: string) => GuessResponse[];
 
   getBoardState(): string[][];
 }
