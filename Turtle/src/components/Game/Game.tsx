@@ -48,8 +48,8 @@ const Game = (props: IGameProps) => {
       const isGuessRequiredLength = currentGuess.length === wordToGuessLength;
       if (isGuessRequiredLength) {
         try {
-          const tmp = gameBLL.guessWord(currentGuess);
-          console.log(tmp);
+          const guessWord = gameBLL.guessWord(currentGuess);
+
         } catch (e) {
           console.log(e);
         }
@@ -78,7 +78,12 @@ const Game = (props: IGameProps) => {
 
   return (
     <>
-      <Board frame={boardFrame} shouldAnimateCell={shouldAnimateCell} shouldAnimateRow={shouldAnimateRow} curRow={0} />
+      <Board
+        frame={boardFrame}
+        shouldAnimateCell={shouldAnimateCell}
+        shouldAnimateRow={shouldAnimateRow}
+        curRow={curRow}
+      />
       <KeyboardArea onKeyPress={onKeyPress} disabledKeyList={[]} />
     </>
   );
