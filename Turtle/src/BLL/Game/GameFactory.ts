@@ -57,7 +57,7 @@ class GameFactory implements IGameFactory {
 
   badWordsMode = (): IGame => {
     const settings: ISettings = new Settings();
-    const newWordStrategy: INewWordStrategy = new NewWordFileStrategy({ possibleWords: wordsToGuessFrom, settings });
+    const newWordStrategy: INewWordStrategy = new NewWordFileStrategy({ possibleWords: badwords, settings });
     const possibleWords: IValidateWordStrategy = new ValidateWordFileStrategy({ possibleWords: badwords });
 
     const wordToGuess: string = newWordStrategy.getWord();
