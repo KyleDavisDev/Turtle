@@ -17,7 +17,7 @@ class Game implements IGame {
 
   constructor(params: IGameParams) {
     this._settings = params.settings;
-    this._wordToGuess = params.wordToGuess;
+    this._wordToGuess = params.wordToGuess.toLowerCase();
     this._boardState = this.getEmptyBoard();
     this._curRow = 0;
     this._wordValidator = params.validateWordStrategy;
@@ -31,11 +31,24 @@ class Game implements IGame {
     );
   }
 
-  public guessWord(word: string): string[] {
-    this.validateWord(word.trim());
-    this.verifyWord(word);
+  public guessWord(userGuess: string): string[] {
+    this.validateWord(userGuess.trim());
+    this.verifyWord(userGuess);
 
-    let results: string[] = [this._wordToGuess];
+    userGuess = userGuess.toLowerCase();
+    let results: string[] = [];
+    for (let i = 0, len = userGuess.length; i < len; i++) {
+      if (userGuess[i] === this._wordToGuess[i]) {
+        // Letter in right place
+        results[i] = "G";
+      } else if (this._wordToGuess.includes(userGuess[i]) && results[i] !== "G") {
+        // Letter in wrong place but exists in the answer
+        results[i] = "Y";
+      } else {
+        // Letter does not exist in the answer
+        results[i] = "R";
+      }
+    }
 
     return results;
   }
