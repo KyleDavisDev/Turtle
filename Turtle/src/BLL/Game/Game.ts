@@ -24,8 +24,8 @@ class Game implements IGame {
   }
 
   private getEmptyBoard(): string[][] {
-    return Array.from({ length: this._settings.getMaxGuesses }, () =>
-      Array.from({ length: this._settings.getWordLength }, () => {
+    return Array.from({ length: this._settings.getMaxGuesses() }, () =>
+      Array.from({ length: this._settings.getWordLength() }, () => {
         return "";
       })
     );
@@ -35,7 +35,7 @@ class Game implements IGame {
     this.validateWord(word.trim());
     this.verifyWord(word);
 
-    let results: string[] = [];
+    let results: string[] = [this._wordToGuess];
 
     return results;
   }
@@ -43,8 +43,8 @@ class Game implements IGame {
   // Confirm that the word follows the rules of the game
   private validateWord(word: string): void {
     if (word.length === 0) throw new Error("You must provide a non-empty word to guess!");
-    if (word.length < this._settings.getWordLength) throw new Error("Guess too short!");
-    if (word.length > this._settings.getWordLength) throw new Error("Guess too long!");
+    if (word.length < this._settings.getWordLength()) throw new Error("Guess too short!");
+    if (word.length > this._settings.getWordLength()) throw new Error("Guess too long!");
   }
 
   // Confirm that the word exists

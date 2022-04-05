@@ -26,9 +26,7 @@ enum gameModes {
 }
 
 class GameFactory implements IGameFactory {
-  private _wordToFind: INewWordStrategy;
-  private _possibleWords: IValidateWordStrategy;
-  private _gameModesSelected: gameModes[];
+  private _gameModesSelected: gameModes[] = [];
 
   constructor() {}
 
@@ -38,7 +36,7 @@ class GameFactory implements IGameFactory {
     const possibleWords: IValidateWordStrategy = new ValidateWordFileStrategy({ possibleWords: scrabbleWords });
 
     const wordToGuess: string = wordToFind.getWord();
-    const game: IGame = new Game({ wordToGuess, settings });
+    const game: IGame = new Game({ wordToGuess, settings, validateWordStrategy: possibleWords });
 
     this._gameModesSelected.push(gameModes.standard);
 
@@ -51,7 +49,7 @@ class GameFactory implements IGameFactory {
     const possibleWords: IValidateWordStrategy = new ValidateWordFileStrategy({ possibleWords: scrabbleWords });
 
     const wordToGuess: string = wordToFind.getWord();
-    const game: IGame = new Game({ wordToGuess, settings });
+    const game: IGame = new Game({ wordToGuess, settings, validateWordStrategy: possibleWords });
 
     this._gameModesSelected.push(gameModes.offline);
     return game;
@@ -63,7 +61,7 @@ class GameFactory implements IGameFactory {
     const possibleWords: IValidateWordStrategy = new ValidateWordFileStrategy({ possibleWords: badwords });
 
     const wordToGuess: string = wordToFind.getWord();
-    const game: IGame = new Game({ wordToGuess, settings });
+    const game: IGame = new Game({ wordToGuess, settings, validateWordStrategy: possibleWords });
 
     this._gameModesSelected.push(gameModes.badWords);
 
@@ -76,7 +74,7 @@ class GameFactory implements IGameFactory {
     const possibleWords: IValidateWordStrategy = new ValidateWordAPIStrategy();
 
     const wordToGuess: string = wordToFind.getWord();
-    const game: IGame = new Game({ wordToGuess, settings });
+    const game: IGame = new Game({ wordToGuess, settings, validateWordStrategy: possibleWords });
 
     this._gameModesSelected.push(gameModes.online);
 

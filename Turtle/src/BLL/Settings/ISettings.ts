@@ -1,11 +1,11 @@
 export interface ISettings {
-  getWordLength: number;
+  getWordLength: () => number;
 
   setWordLength: (val: number) => void;
 
-  getMaxGuesses: number;
+  getMaxGuesses: () => number;
 
   setMaxGuesses: (val: number) => void;
 
-  getGameName: string;
+  getGameName: () => string;
 }

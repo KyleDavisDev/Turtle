@@ -9,7 +9,7 @@ class Settings implements ISettings {
   private _maxGuesses = DEFAULT_MAX_GUESSES;
   private _gameName = GAME_NAME;
 
-  public get getWordLength(): number {
+  public getWordLength(): number {
     return this._wordLength;
   }
 
@@ -20,7 +20,7 @@ class Settings implements ISettings {
     this._wordLength = val;
   }
 
-  public get getMaxGuesses() {
+  public getMaxGuesses() {
     return this._maxGuesses;
   }
 
@@ -32,7 +32,7 @@ class Settings implements ISettings {
     this._maxGuesses = guesses;
   }
 
-  public get getGameName() {
+  public getGameName() {
     return this._gameName;
   }
 }

@@ -16,7 +16,7 @@ class NewWordFileStrategy implements INewWordStrategy {
   }
 
   getWord(): string {
-    const wordsByLength = this._possibleWords.filter(word => word.length === this._settings.getWordLength);
+    const wordsByLength = this._possibleWords.filter(word => word.length === this._settings.getWordLength());
 
     if (!wordsByLength.length || wordsByLength.length === 0) {
       throw new Error("Cannot find any words with that length");

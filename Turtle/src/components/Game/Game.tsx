@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Platform, StyleSheet } from "react-native";
 import { Board } from "../Board/Board";
-import { IGame } from "../../../../BLL/Game/IGame";
+import { IGame } from "../../BLL/Game/IGame";
 import { CellColors, ICell } from "../Board/components/Row/Row";
 
 interface IGameProps {
