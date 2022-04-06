@@ -12,6 +12,12 @@ interface IBoardProps {
 const Board = (props: IBoardProps) => {
   const { frame, curRow, shouldAnimateRow, shouldAnimateCell } = props;
 
+  useEffect(() => {
+    if (shouldAnimateRow) {
+
+    }
+  }, [shouldAnimateRow])
+
   const shake = useRef(new Animated.Value(1)).current;
 
   React.useEffect(() => {

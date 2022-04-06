@@ -72,7 +72,7 @@ const Game = (props: IGameProps) => {
       }
     } else {
       console.log("inside the enter but length not long enough");
-      setShouldAnimateRow(!shouldAnimateRow);
+      setShouldAnimateRow(true);
     }
   };
 
