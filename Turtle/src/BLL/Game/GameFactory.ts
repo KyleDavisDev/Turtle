@@ -61,7 +61,7 @@ class GameFactory implements IGameFactory {
     const possibleWords: IValidateWordStrategy = new ValidateWordFileStrategy({ possibleWords: badwords });
 
     const wordToGuess: string = newWordStrategy.getWord();
-    console.log(wordToGuess);
+    
     const game: IGame = new Game({ wordToGuess, settings, validateWordStrategy: possibleWords });
 
     this._gameModesSelected.push(gameModes.badWords);
