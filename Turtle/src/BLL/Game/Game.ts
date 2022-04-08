@@ -46,13 +46,15 @@ class Game implements IGame {
       if (userGuess[i] === this._wordToGuess[i]) {
         results[i] = "G";
 
-        wordToGuessCopy = this.removeLetterAtIndex(wordToGuessCopy, i);
+        wordToGuessCopy = this.removeLetterAtIndex(wordToGuessCopy, wordToGuessCopy.indexOf(userGuess[i]));
       }
     }
 
+    console.log(wordToGuessCopy);
+
     // Search for misplaced letters next
     for (let i = 0; i < userGuess.length; i++) {
-      if (wordToGuessCopy.includes(userGuess[i])) {
+      if (wordToGuessCopy.includes(userGuess[i]) && results[i] !== "G") {
         results[i] = "Y";
         wordToGuessCopy = this.removeLetterAtIndex(wordToGuessCopy, wordToGuessCopy.indexOf(userGuess[i]));
       }
