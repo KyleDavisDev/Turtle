@@ -32,21 +32,29 @@ class Game implements IGame {
   }
 
   public guessWord(userGuess: string): GuessResponse[] {
-    this.validateWord(userGuess.trim());
+    this.validateWord(userGuess);
     this.verifyWord(userGuess);
+    userGuess = userGuess.trim().toLowerCase();
+    let wordToGuessCopy = this._wordToGuess; // going to be removing letters from the copy as letters are found
 
-    userGuess = userGuess.toLowerCase();
-    let results: GuessResponse[] = [];
-    for (let i = 0, len = userGuess.length; i < len; i++) {
+    let results: GuessResponse[] = Array.from({ length: this._settings.getWordLength() }, () => {
+      return "/";
+    });
+
+    // Search for matching letters first!
+    for (let i = 0; i < userGuess.length; i++) {
       if (userGuess[i] === this._wordToGuess[i]) {
-        // Letter in right place
         results[i] = "G";
-      } else if (this._wordToGuess.includes(userGuess[i]) && results[i] !== "G") {
-        // Letter in wrong place but exists in the answer
+
+        wordToGuessCopy = this.removeLetterAtIndex(wordToGuessCopy, i);
+      }
+    }
+
+    // Search for misplaced letters next
+    for (let i = 0; i < userGuess.length; i++) {
+      if (wordToGuessCopy.includes(userGuess[i])) {
         results[i] = "Y";
-      } else {
-        // Letter does not exist in the answer
-        results[i] = "/";
+        wordToGuessCopy = this.removeLetterAtIndex(wordToGuessCopy, wordToGuessCopy.indexOf(userGuess[i]));
       }
     }
 
@@ -73,6 +81,10 @@ class Game implements IGame {
   getBoardState(): string[][] {
     return this._boardState;
   }
+
+  private removeLetterAtIndex = (s: string, i: number): string => {
+    return s.slice(0, i) + s.slice(i + 1);
+  };
 }
 
 export { Game };
