@@ -1,4 +1,4 @@
-import { IGame } from "./IGame";
+import { IGame } from "../Game/IGame";
 
 export interface IGameFactory {
   standardGame: () => IGame;
