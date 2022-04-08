@@ -8,9 +8,9 @@ export interface ICell {
 
 export enum CellColors {
   "TRANSPARENT" = "rgba(0,0,0,1)",
-  "GREEN" = "rgb(83, 141, 78)",
-  "GRAY" = "rgb(58, 58, 60)",
-  "YELLOW" = "rgb(181, 159, 59)"
+  "GREEN" = "rgb(39, 155, 78)",
+  "GRAY" = "rgb(67, 77, 93)",
+  "YELLOW" = "rgb(187, 145, 18)"
 }
 
 export interface RowProps {
