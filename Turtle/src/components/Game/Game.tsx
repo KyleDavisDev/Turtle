@@ -1,5 +1,4 @@
-import React, { useEffect, useState } from "react";
-import { Platform, StyleSheet } from "react-native";
+import React, { useState } from "react";
 import { Board } from "../Board/Board";
 import { IGame } from "../../BLL/Game/IGame";
 import { CellColors, ICell } from "../Board/components/Row/Row";
@@ -67,12 +66,18 @@ const Game = (props: IGameProps) => {
     }
 
     try {
-      console.log("on enter key");
-      const guessWord = gameBLL.guessWord(word);
-      console.log("12");
+      const guessResults = gameBLL.guessWord(word);
+      guessResults.forEach((res, ind) => {
+        if (res === "/") {
+          boardFrame[curRow][ind] = { color: CellColors.GRAY, value: word[ind] };
+        } else if (res === "Y") {
+          boardFrame[curRow][ind] = { color: CellColors.YELLOW, value: word[ind] };
+        } else if (res === "G") {
+          boardFrame[curRow][ind] = { color: CellColors.GREEN, value: word[ind] };
+        }
+      });
+
       setCurRow(curRow + 1);
-      console.log("34");
-      console.log(gameBLL.getBoardState());
     } catch (e) {
       console.log(e);
       setPulseCellAnimation(false);
