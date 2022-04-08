@@ -22,7 +22,7 @@ const Game = (props: IGameProps) => {
   const [boardFrame, setBoardFrame] = useState<ICell[][]>(initBoard);
   const [curRow, setCurRow] = useState<number>(0);
   const [pulseRowAnimation, setPulseRowAnimation] = useState<null | boolean>(null);
-  const [pulseCellAnimation, setPulseCellAnimation] = useState<boolean>(false);
+  const [pulseCellAnimation, setPulseCellAnimation] = useState<null | boolean>(null);
   const wordToGuessLength = boardFrame[0].length;
 
   const onKeyPress = (key: string) => {
@@ -44,15 +44,14 @@ const Game = (props: IGameProps) => {
   const onDeletePress = (word: string): void => {
     const newFrame = [...boardFrame];
 
-    const isGuessLongerThanZero = word.length > 0;
-    if (isGuessLongerThanZero) {
+    if (word.length > 0) {
       // Set last character to empty space
       const index = word.length - 1;
       newFrame[curRow][index].value = "";
     }
 
     // animations
-    setPulseCellAnimation(false);
+    setPulseCellAnimation(null);
     setPulseRowAnimation(null);
 
     setBoardFrame(newFrame);
@@ -66,8 +65,7 @@ const Game = (props: IGameProps) => {
     }
 
     try {
-      const guessResults = gameBLL.guessWord(word);
-      guessResults.forEach((res, ind) => {
+      gameBLL.guessWord(word).forEach((res, ind) => {
         if (res === "/") {
           boardFrame[curRow][ind] = { color: CellColors.GRAY, value: word[ind] };
         } else if (res === "Y") {
@@ -78,9 +76,11 @@ const Game = (props: IGameProps) => {
       });
 
       setCurRow(curRow + 1);
+
+      setPulseCellAnimation(null);
     } catch (e) {
       console.log(e);
-      setPulseCellAnimation(false);
+      setPulseCellAnimation(null);
       setPulseRowAnimation(!pulseRowAnimation);
     }
   };
@@ -94,8 +94,11 @@ const Game = (props: IGameProps) => {
       // set the frame to the letter
       newFrame[curRow][wordBeingTyped.length].value = key.toUpperCase();
 
+      // animations
       setPulseCellAnimation(true);
+      setPulseRowAnimation(null);
     } else {
+      // animations
       setPulseCellAnimation(false);
       setPulseRowAnimation(!pulseRowAnimation);
     }
