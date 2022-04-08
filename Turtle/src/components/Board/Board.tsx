@@ -5,18 +5,25 @@ import { Row, ICell } from "./components/Row/Row";
 interface IBoardProps {
   frame: ICell[][];
   curRow: Number;
-  shouldAnimateRow: boolean;
+  shouldAnimateRow: null | boolean;
   shouldAnimateCell: boolean;
 }
 
 const Board = (props: IBoardProps) => {
   const { frame, curRow, shouldAnimateRow, shouldAnimateCell } = props;
 
-  useEffect(() => {
-    if (shouldAnimateRow) {
+  // const [animateRow, setAnimateRow] = useState<null | boolean>(null);
 
-    }
-  }, [shouldAnimateRow])
+  // This will force useEffect to ONLY run on changes to deps and ignore onMount
+  // const isInitialMount = useRef(true);
+  // useEffect(() => {
+  //   if (isInitialMount.current) {
+  //     isInitialMount.current = false;
+  //   } else {
+  //     console.log(shouldAnimateRow);
+  //     setAnimateRow("true");
+  //   }
+  // }, [shouldAnimateRow]);
 
   const shake = useRef(new Animated.Value(1)).current;
 
@@ -32,13 +39,15 @@ const Board = (props: IBoardProps) => {
   return (
     <View>
       {frame.map((cells, index) => {
-        if (index > 0) return;
-        const animateRow: boolean = shouldAnimateRow && index === curRow;
-        console.log(animateRow);
-        const animateCell: boolean = shouldAnimateCell && index === curRow;
+        const triggerRowAnimation: boolean = shouldAnimateRow !== null && index === curRow;
+        const triggerCellAnimation: boolean = shouldAnimateCell && index === curRow;
+
         return (
-          <Animated.View key={`boardRow-${index}`} style={[animateRow && { transform: [{ translateX: shake }] }]}>
-            <Row key={`row-${index}`} cells={cells} shouldAnimateCell={animateCell} />
+          <Animated.View
+            key={`boardRow-${index}`}
+            style={[triggerRowAnimation && { transform: [{ translateX: shake }] }]}
+          >
+            <Row key={`row-${index}`} cells={cells} shouldAnimateCell={triggerCellAnimation} />
           </Animated.View>
         );
       })}

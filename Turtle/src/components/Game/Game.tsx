@@ -22,8 +22,8 @@ const Game = (props: IGameProps) => {
   });
   const [boardFrame, setBoardFrame] = useState<ICell[][]>(initBoard);
   const [curRow, setCurRow] = useState<number>(0);
-  const [shouldAnimateRow, setShouldAnimateRow] = useState<boolean>(false);
-  const [shouldAnimateCell, setShouldAnimateCell] = useState<boolean>(false);
+  const [pulseRowAnimation, setPulseRowAnimation] = useState<null | boolean>(null);
+  const [pulseCellAnimation, setPulseCellAnimation] = useState<boolean>(false);
   const wordToGuessLength = boardFrame[0].length;
 
   const onKeyPress = (key: string) => {
@@ -53,31 +53,34 @@ const Game = (props: IGameProps) => {
     }
 
     // animations
-    // word.length === 0 ? setShouldAnimateRow(true) : setShouldAnimateRow(false);
-    setShouldAnimateCell(false);
+    setPulseCellAnimation(false);
+    setPulseRowAnimation(null);
 
     setBoardFrame(newFrame);
   };
 
   const onEnterKeyPress = (word: string): void => {
-    const isGuessRequiredLength = word.length === wordToGuessLength;
-    if (isGuessRequiredLength) {
-      try {
-        const guessWord = gameBLL.guessWord(word);
-        setCurRow(curRow + 1);
-      } catch (e) {
-        console.log("Am i here????");
-        setShouldAnimateCell(false);
-        // setShouldAnimateRow(!shouldAnimateRow);
-      }
-    } else {
-      console.log("inside the enter but length not long enough");
-      setShouldAnimateRow(true);
+    if (word.length < wordToGuessLength) {
+      // animate row
+      setPulseRowAnimation(!pulseRowAnimation);
+      return;
+    }
+
+    try {
+      console.log("on enter key");
+      const guessWord = gameBLL.guessWord(word);
+      console.log("12");
+      setCurRow(curRow + 1);
+      console.log("34");
+      console.log(gameBLL.getBoardState());
+    } catch (e) {
+      console.log(e);
+      setPulseCellAnimation(false);
+      setPulseRowAnimation(!pulseRowAnimation);
     }
   };
 
   const onLetterPress = (wordBeingTyped: string, key: string): void => {
-    console.log("im not here, right?");
     const newFrame = [...boardFrame];
 
     // Letters here
@@ -85,11 +88,11 @@ const Game = (props: IGameProps) => {
     if (isGuessBeforeEnd) {
       // set the frame to the letter
       newFrame[curRow][wordBeingTyped.length].value = key.toUpperCase();
-      setShouldAnimateCell(true);
-      // setShouldAnimateRow(false);
+
+      setPulseCellAnimation(true);
     } else {
-      setShouldAnimateCell(false);
-      // setShouldAnimateRow(true);
+      setPulseCellAnimation(false);
+      setPulseRowAnimation(!pulseRowAnimation);
     }
 
     setBoardFrame(newFrame);
@@ -97,12 +100,10 @@ const Game = (props: IGameProps) => {
 
   return (
     <>
-      {console.log(shouldAnimateRow)}
-
       <Board
         frame={boardFrame}
-        shouldAnimateCell={shouldAnimateCell}
-        shouldAnimateRow={shouldAnimateRow}
+        shouldAnimateCell={pulseCellAnimation}
+        shouldAnimateRow={pulseRowAnimation}
         curRow={curRow}
       />
       <KeyboardArea onKeyPress={onKeyPress} disabledKeyList={[]} />
