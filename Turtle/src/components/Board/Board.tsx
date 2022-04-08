@@ -6,24 +6,11 @@ interface IBoardProps {
   frame: ICell[][];
   curRow: Number;
   shouldAnimateRow: null | boolean;
-  shouldAnimateCell: boolean;
+  shouldAnimateCell: null | boolean;
 }
 
 const Board = (props: IBoardProps) => {
   const { frame, curRow, shouldAnimateRow, shouldAnimateCell } = props;
-
-  // const [animateRow, setAnimateRow] = useState<null | boolean>(null);
-
-  // This will force useEffect to ONLY run on changes to deps and ignore onMount
-  // const isInitialMount = useRef(true);
-  // useEffect(() => {
-  //   if (isInitialMount.current) {
-  //     isInitialMount.current = false;
-  //   } else {
-  //     console.log(shouldAnimateRow);
-  //     setAnimateRow("true");
-  //   }
-  // }, [shouldAnimateRow]);
 
   const shake = useRef(new Animated.Value(1)).current;
 
@@ -40,7 +27,7 @@ const Board = (props: IBoardProps) => {
     <View>
       {frame.map((cells, index) => {
         const triggerRowAnimation: boolean = shouldAnimateRow !== null && index === curRow;
-        const triggerCellAnimation: boolean = shouldAnimateCell && index === curRow;
+        const triggerCellAnimation: boolean = shouldAnimateCell !== null && index === curRow;
 
         return (
           <Animated.View
