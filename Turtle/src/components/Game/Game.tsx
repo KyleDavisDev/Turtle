@@ -65,6 +65,7 @@ const Game = (props: IGameProps) => {
     }
 
     try {
+      // TODO: Maybe adapter pattern here?
       gameBLL.guessWord(word).forEach((res, ind) => {
         if (res === "/") {
           boardFrame[curRow][ind] = { color: CellColors.GRAY, value: word[ind] };
