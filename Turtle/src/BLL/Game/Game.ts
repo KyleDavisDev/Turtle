@@ -50,7 +50,11 @@ class Game implements IGame {
       }
     }
 
-    console.log(wordToGuessCopy);
+    // Check if person has guessed correctly
+    if (wordToGuessCopy.length === 0) {
+      this._winnerWinnerChickenDinner();
+      return results;
+    }
 
     // Search for misplaced letters next
     for (let i = 0; i < userGuess.length; i++) {
@@ -87,6 +91,10 @@ class Game implements IGame {
   private removeLetterAtIndex = (s: string, i: number): string => {
     return s.slice(0, i) + s.slice(i + 1);
   };
+
+  private _winnerWinnerChickenDinner() {
+    // Should I need to do anything here?
+  }
 }
 
 export { Game };
