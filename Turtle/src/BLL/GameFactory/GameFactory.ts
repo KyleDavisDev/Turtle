@@ -12,8 +12,8 @@ import wordsToGuessFrom from "../Strategies/NewWordStrategy/NewWordFileStrategy/
 // words from https://github.com/benjamincrom/scrabble/blob/master/scrabble/dictionary.json
 import scrabbleWords from "../Strategies/ValidateWordStrategy/ValidateWordFileStrategy/scrabbleWords.json";
 
-// list from https://github.com/MauriceButler/badwords
-import badwords from "../Strategies/ValidateWordStrategy/ValidateWordFileStrategy/badWords.json";
+// words from https://github.com/LDNOOBW/List-of-Dirty-Naughty-Obscene-and-Otherwise-Bad-Words
+import lewdWords from "../Strategies/ValidateWordStrategy/ValidateWordFileStrategy/lewdWords.json";
 import { ValidateWordAPIStrategy } from "../Strategies/ValidateWordStrategy/ValidateWordAPIStrategy/ValidateWordAPIStrategy";
 import { NewWordAPIStrategy } from "../Strategies/NewWordStrategy/NewWordAPIStrategy/NewWordAPIStrategy";
 import { IGameFactory } from "./IGameFactory";
@@ -32,10 +32,11 @@ class GameFactory implements IGameFactory {
 
   standardGame = (): IGame => {
     const settings: ISettings = new Settings();
-    const newWordStrategy: INewWordStrategy = new NewWordFileStrategy({ possibleWords: wordsToGuessFrom, settings });
+    const newWordStrategy: INewWordStrategy = new NewWordFileStrategy({ possibleWords: scrabbleWords, settings });
     const possibleWords: IValidateWordStrategy = new ValidateWordFileStrategy({ possibleWords: scrabbleWords });
 
     const wordToGuess: string = newWordStrategy.getWord();
+    console.log(wordToGuess);
     const game: IGame = new Game({ wordToGuess, settings, validateWordStrategy: possibleWords });
 
     this._gameModesSelected.push(gameModes.standard);
@@ -45,7 +46,7 @@ class GameFactory implements IGameFactory {
 
   offlineMode = (): IGame => {
     const settings: ISettings = new Settings();
-    const newWordStrategy: INewWordStrategy = new NewWordFileStrategy({ possibleWords: wordsToGuessFrom, settings });
+    const newWordStrategy: INewWordStrategy = new NewWordFileStrategy({ possibleWords: scrabbleWords, settings });
     const possibleWords: IValidateWordStrategy = new ValidateWordFileStrategy({ possibleWords: scrabbleWords });
 
     const wordToGuess: string = newWordStrategy.getWord();
@@ -57,8 +58,8 @@ class GameFactory implements IGameFactory {
 
   badWordsMode = (): IGame => {
     const settings: ISettings = new Settings();
-    const newWordStrategy: INewWordStrategy = new NewWordFileStrategy({ possibleWords: badwords, settings });
-    const possibleWords: IValidateWordStrategy = new ValidateWordFileStrategy({ possibleWords: badwords });
+    const newWordStrategy: INewWordStrategy = new NewWordFileStrategy({ possibleWords: lewdWords, settings });
+    const possibleWords: IValidateWordStrategy = new ValidateWordFileStrategy({ possibleWords: lewdWords });
 
     const wordToGuess: string = newWordStrategy.getWord();
     console.log(wordToGuess);
