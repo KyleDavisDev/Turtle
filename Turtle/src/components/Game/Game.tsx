@@ -6,10 +6,11 @@ import { KeyboardArea } from "../KeyboardArea/KeyboardArea";
 
 interface IGameProps {
   gameBLL: IGame;
+  onWin: () => void;
 }
 
 const Game = (props: IGameProps) => {
-  const { gameBLL } = props;
+  const { gameBLL, onWin } = props;
 
   const initBoard: ICell[][] = gameBLL.getBoardState().map(row => {
     return row.map(() => {
@@ -76,6 +77,11 @@ const Game = (props: IGameProps) => {
         }
       });
 
+      if (isWinner(boardFrame[curRow])) {
+        onIsWinner();
+        return;
+      }
+
       setCurRow(curRow + 1);
 
       setPulseCellAnimation(null);
@@ -105,6 +111,16 @@ const Game = (props: IGameProps) => {
     }
 
     setBoardFrame(newFrame);
+  };
+
+  const isWinner = (row: ICell[]) => {
+    return row.every(cell => {
+      return cell.color === CellColors.GREEN;
+    });
+  };
+
+  const onIsWinner = () => {
+    onWin();
   };
 
   return (
