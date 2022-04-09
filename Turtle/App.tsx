@@ -6,12 +6,14 @@ import { Game } from "./src/components/Game/Game";
 import { ModalWinner } from "./src/components/Modals/ModalWinner/ModalWinner";
 import { useState } from "react";
 import { ModalInstructions } from "./src/components/Modals/ModalInstructions/ModalInstructions";
+import { IGame } from "./src/BLL/Game/IGame";
 
+const factory = new GameFactory();
+const newGame = factory.badWordsMode();
 export default function App() {
-  const factory = new GameFactory();
-  const gameBLL = factory.standardGame();
-
+  const [game, setGame] = useState<IGame>(newGame);
   const [isWinner, setIsWinner] = useState<boolean>(false);
+  const [displayInstructions, setDisplayInstructions] = useState<boolean>(true);
   const [pauseGame, setPauseGame] = useState<boolean>(false);
 
   const onWinner = () => {
@@ -21,17 +23,22 @@ export default function App() {
     console.log("am i here?");
   };
 
+  const onInstructionsClose = () => {
+    setDisplayInstructions(false);
+    // setGame();
+  };
+
   const onNewGameModeSelect = (mode: string): void => {
-    console.log(mode);
+    setGame(factory.standardGame());
+    setIsWinner(false);
   };
 
   return (
     <View style={styles.container}>
-      <ModalInstructions />
+      {displayInstructions && <ModalInstructions onClose={onInstructionsClose} />}
       {isWinner && <ModalWinner onGameModeSelect={onNewGameModeSelect} />}
       <Header />
-      <Game gameBLL={gameBLL} onWin={onWinner} />
-      <StatusBar style="auto" />
+      <Game gameBLL={game} onWin={onWinner} />
     </View>
   );
 }

@@ -1,12 +1,23 @@
 import React from "react";
 
-import { StyleSheet, Text, View } from "react-native";
+import { Pressable, StyleSheet, Text, View } from "react-native";
 import { CellColors } from "../../Board/components/Row/Row";
 
-const ModalInstructions = () => {
+interface IModalInstructions {
+  onClose: () => void;
+}
+
+const ModalInstructions = (props: IModalInstructions) => {
+  const { onClose } = props;
+
   return (
     <View style={styles.overlay}>
       <View style={styles.container}>
+        <View style={styles.closeContainer}>
+          <Pressable onPress={() => onClose()}>
+            <Text style={styles.closeContainerText}>X</Text>
+          </Pressable>
+        </View>
         <Text style={styles.h1}>How to Play</Text>
         <Text style={styles.text}>Guess the TURTLE in six tries.</Text>
 
@@ -68,6 +79,7 @@ const ModalInstructions = () => {
 
 const styles = StyleSheet.create({
   overlay: {
+    cursor: "normal",
     width: "100%",
     height: "100vh",
     position: "absolute",
@@ -84,6 +96,16 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     backgroundColor: "#222",
     color: "white"
+  },
+  closeContainer: {
+    display: "flex",
+    justifyContent: "flex-end",
+    alignItems: "flex-end"
+  },
+  closeContainerText: {
+    color: "white",
+    fontSize: 16,
+    padding: 5
   },
   h1: {
     color: "white",
