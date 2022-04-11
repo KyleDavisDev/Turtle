@@ -47,12 +47,12 @@ const Row = (props: RowProps) => {
       Animated.timing(popIn, {
         toValue: 1.08,
         duration: 80,
-        useNativeDriver: true
+        useNativeDriver: false
       }),
       Animated.timing(popIn, {
         toValue: 1,
         duration: 60,
-        useNativeDriver: true
+        useNativeDriver: false
       })
     ]).start();
 
@@ -66,12 +66,12 @@ const Row = (props: RowProps) => {
           toValue: 0.5,
           duration: firstHalf,
           easing: Easing.linear, // Easing is an additional import from react-native
-          useNativeDriver: true
+          useNativeDriver: false
         }),
         Animated.timing(flipCardAnimations[ind], {
           toValue: 0,
           duration: secondHalf,
-          useNativeDriver: true
+          useNativeDriver: false
         })
       ]).start();
 
@@ -80,8 +80,8 @@ const Row = (props: RowProps) => {
         Animated.timing(flipCardColor[ind], {
           toValue: 1,
           duration: 1,
-          easing: Easing.linear, // Easing is an additional import from react-native
-          useNativeDriver: true
+          // easing: Easing.linear, // Easing is an additional import from react-native
+          useNativeDriver: false
         })
       ]).start();
     });
@@ -99,7 +99,7 @@ const Row = (props: RowProps) => {
             key={`cell-${ind}`}
             style={[
               styles.cell,
-              { backgroundColor: CellColors.TRANSPARENT },
+              { backgroundColor: cell.color },
               shakeCell2 && {
                 transform: [{ scale: popIn }]
               },
