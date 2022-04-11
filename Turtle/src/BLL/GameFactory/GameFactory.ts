@@ -12,8 +12,8 @@ import wordsToGuessFrom from "../Strategies/NewWordStrategy/NewWordFileStrategy/
 // words from https://github.com/benjamincrom/scrabble/blob/master/scrabble/dictionary.json
 import scrabbleWords from "../Strategies/ValidateWordStrategy/ValidateWordFileStrategy/scrabbleWords.json";
 
-// words from https://github.com/LDNOOBW/List-of-Dirty-Naughty-Obscene-and-Otherwise-Bad-Words
-import lewdWords from "../Strategies/ValidateWordStrategy/ValidateWordFileStrategy/lewdWords.json";
+// words from https://github.com/lorenbrichter/Words
+import spanishWords from "../Strategies/ValidateWordStrategy/ValidateWordFileStrategy/spanishWords.json";
 import { ValidateWordAPIStrategy } from "../Strategies/ValidateWordStrategy/ValidateWordAPIStrategy/ValidateWordAPIStrategy";
 import { NewWordAPIStrategy } from "../Strategies/NewWordStrategy/NewWordAPIStrategy/NewWordAPIStrategy";
 import { IGameFactory } from "./IGameFactory";
@@ -56,10 +56,10 @@ class GameFactory implements IGameFactory {
     return game;
   };
 
-  badWordsMode = (): IGame => {
+  spanishMode = (): IGame => {
     const settings: ISettings = new Settings();
-    const newWordStrategy: INewWordStrategy = new NewWordFileStrategy({ possibleWords: lewdWords, settings });
-    const possibleWords: IValidateWordStrategy = new ValidateWordFileStrategy({ possibleWords: lewdWords });
+    const newWordStrategy: INewWordStrategy = new NewWordFileStrategy({ possibleWords: spanishWords, settings });
+    const possibleWords: IValidateWordStrategy = new ValidateWordFileStrategy({ possibleWords: spanishWords });
 
     const wordToGuess: string = newWordStrategy.getWord();
     console.log(wordToGuess);
@@ -90,7 +90,7 @@ class GameFactory implements IGameFactory {
     if (lastModePlayed === "standard") return this.standardGame();
     if (lastModePlayed === "offline") return this.offlineMode();
     if (lastModePlayed === "online") return this.onlineMode();
-    if (lastModePlayed === "badWords") return this.badWordsMode();
+    if (lastModePlayed === "badWords") return this.spanishMode();
 
     return this.standardGame();
   };
