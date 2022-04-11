@@ -49,11 +49,13 @@ const Game = (props: IGameProps) => {
       // Set last character to empty space
       const index = word.length - 1;
       newFrame[curRow][index].value = "";
+
+      setPulseRowAnimation(null);
+    } else if (word.length === 0) {
+      setPulseRowAnimation(!pulseRowAnimation);
     }
 
-    // animations
     setPulseCellAnimation(null);
-    setPulseRowAnimation(null);
 
     setBoardFrame(newFrame);
   };
@@ -106,7 +108,7 @@ const Game = (props: IGameProps) => {
       setPulseRowAnimation(null);
     } else {
       // animations
-      setPulseCellAnimation(false);
+      setPulseCellAnimation(null);
       setPulseRowAnimation(!pulseRowAnimation);
     }
 
