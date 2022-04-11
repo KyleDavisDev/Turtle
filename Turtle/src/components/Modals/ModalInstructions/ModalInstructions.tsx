@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useEffect } from "react";
 
 import { Pressable, StyleSheet, Text, View } from "react-native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { CellColors } from "../../Board/components/Row/Row";
 
 interface IModalInstructions {
@@ -10,11 +11,40 @@ interface IModalInstructions {
 const ModalInstructions = (props: IModalInstructions) => {
   const { onClose } = props;
 
+
+  const onModalClose = async () => {
+    await rememberInstructionsHaveBeenSeen();
+    onClose();
+  }
+  const rememberInstructionsHaveBeenSeen = async () => {
+    try {
+      await AsyncStorage.setItem('@haveInstructionsBeenSeen', "true")
+    } catch (e) {
+      // saving error
+    }
+  }
+
+
+  useEffect(() => {
+    const getHasAlreadyBeenSeen = async () => {
+      try {
+        const value = await AsyncStorage.getItem('@haveInstructionsBeenSeen')
+        if (value !== null) {
+          onClose();
+        }
+      } catch (e) {
+        // error reading value
+      }
+    }
+    getHasAlreadyBeenSeen();
+  }, [])
+
+
   return (
     <View style={styles.overlay}>
       <View style={styles.container}>
         <View style={styles.closeContainer}>
-          <Pressable onPress={() => onClose()}>
+          <Pressable onPress={() => onModalClose()}>
             <Text style={styles.closeContainerText}>X</Text>
           </Pressable>
         </View>
