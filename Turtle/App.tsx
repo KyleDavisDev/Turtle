@@ -9,7 +9,7 @@ import { ModalInstructions } from "./src/components/Modals/ModalInstructions/Mod
 import { IGame } from "./src/BLL/Game/IGame";
 
 const factory = new GameFactory();
-const newGame = factory.badWordsMode();
+const newGame = factory.spanishMode();
 export default function App() {
   const [game, setGame] = useState<IGame>(newGame);
   const [isWinner, setIsWinner] = useState<boolean>(false);
