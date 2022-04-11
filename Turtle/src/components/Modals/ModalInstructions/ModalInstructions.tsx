@@ -6,39 +6,45 @@ import { CellColors } from "../../Board/components/Row/Row";
 
 interface IModalInstructions {
   onClose: () => void;
+  shouldDisplay: boolean;
 }
 
 const ModalInstructions = (props: IModalInstructions) => {
-  const { onClose } = props;
-
+  const { onClose, shouldDisplay } = props;
 
   const onModalClose = async () => {
     await rememberInstructionsHaveBeenSeen();
     onClose();
-  }
+  };
   const rememberInstructionsHaveBeenSeen = async () => {
     try {
-      await AsyncStorage.setItem('@haveInstructionsBeenSeen', "true")
+      await AsyncStorage.setItem("@haveInstructionsBeenSeen", "true");
     } catch (e) {
       // saving error
     }
-  }
-
+  };
 
   useEffect(() => {
     const getHasAlreadyBeenSeen = async () => {
       try {
-        const value = await AsyncStorage.getItem('@haveInstructionsBeenSeen')
+        const value = await AsyncStorage.getItem("@haveInstructionsBeenSeen");
         if (value !== null) {
           onClose();
         }
       } catch (e) {
         // error reading value
       }
-    }
-    getHasAlreadyBeenSeen();
-  }, [])
+    };
 
+    if (shouldDisplay) {
+    } else {
+      getHasAlreadyBeenSeen();
+    }
+  }, []);
+
+  if (!shouldDisplay) {
+    return <></>;
+  }
 
   return (
     <View style={styles.overlay}>
