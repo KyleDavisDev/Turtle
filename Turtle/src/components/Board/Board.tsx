@@ -38,7 +38,7 @@ const Board = (props: IBoardProps) => {
       {frame.map((cells, index) => {
         const triggerRowAnimation: boolean = shouldAnimateRow !== null && index === curRow;
         const canAnimate = index === curRow || index === curRow - 1;
-        const triggerCellShake: boolean = shouldAnimateCell !== null && canAnimate;
+        const triggerCellShake: boolean = shouldAnimateCell !== null && canAnimate && index === curRow;
         const triggerCellFlip: boolean = canAnimate && index === curRow - 1 && flipCells;
 
         // if (index > 1) return <></>;
@@ -60,7 +60,5 @@ const Board = (props: IBoardProps) => {
     </View>
   );
 };
-
-const styles = StyleSheet.create({});
 
 export { Board };
