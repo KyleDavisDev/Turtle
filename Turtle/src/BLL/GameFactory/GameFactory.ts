@@ -58,7 +58,9 @@ class GameFactory implements IGameFactory {
 
   spanishMode = (): IGame => {
     const settings: ISettings = new Settings();
+    // @ts-ignore
     const newWordStrategy: INewWordStrategy = new NewWordFileStrategy({ possibleWords: spanishWords, settings });
+    // @ts-ignore
     const possibleWords: IValidateWordStrategy = new ValidateWordFileStrategy({ possibleWords: spanishWords });
 
     const wordToGuess: string = newWordStrategy.getWord();
