@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, Animated, Button } from "react-native";
+import { StyleSheet, Text, View, Animated, Button, Easing } from "react-native";
 import React, { useRef } from "react";
 
 export interface ICell {
@@ -15,25 +15,32 @@ export enum CellColors {
 
 export interface RowProps {
   cells: ICell[];
-  shouldAnimateCell: boolean;
+  canAnimate: boolean;
+  shakeCell: boolean;
+  flipCell: boolean;
 }
 
 const Row = (props: RowProps) => {
-  const { cells, shouldAnimateCell } = props;
-  let curCellIndex = 0;
-  if (shouldAnimateCell) {
-    // No need to loop through if we aren't going to animate the cell anyway
-    curCellIndex = cells.length - 1;
-    for (let i = cells.length - 1; i >= 0; i--) {
-      const cell: ICell = cells[i];
-      if (cell.value !== "") {
-        curCellIndex = i;
+  const { cells, canAnimate, shakeCell, flipCell } = props;
+
+  let curCellIndex = cells.length - 1;
+  if (canAnimate && shakeCell) {
+    for (let i = 0, len = cells.length; i < len; i++) {
+      if (cells[i].value === "") {
+        curCellIndex = i - 1;
         break;
       }
     }
   }
 
-  const popIn = useRef(new Animated.Value(1)).current;
+  const popIn = new Animated.Value(1);
+  const flipCardAnimations: Animated.Value[] = [];
+  const flipCardColor: Animated.Value[] = [];
+
+  cells.forEach(() => {
+    flipCardAnimations.push(new Animated.Value(0));
+    flipCardColor.push(new Animated.Value(0));
+  });
 
   React.useEffect(() => {
     Animated.sequence([
@@ -48,23 +55,68 @@ const Row = (props: RowProps) => {
         useNativeDriver: true
       })
     ]).start();
+
+    const firstHalf = 175;
+    const secondHalf = 175;
+    const combined = firstHalf + secondHalf;
+    cells.forEach((_, ind) => {
+      Animated.sequence([
+        Animated.delay(combined * ind),
+        Animated.timing(flipCardAnimations[ind], {
+          toValue: 0.5,
+          duration: firstHalf,
+          easing: Easing.linear, // Easing is an additional import from react-native
+          useNativeDriver: true
+        }),
+        Animated.timing(flipCardAnimations[ind], {
+          toValue: 0,
+          duration: secondHalf,
+          useNativeDriver: true
+        })
+      ]).start();
+
+      Animated.sequence([
+        Animated.delay(combined * ind + firstHalf),
+        Animated.timing(flipCardColor[ind], {
+          toValue: 1,
+          duration: 1,
+          easing: Easing.linear, // Easing is an additional import from react-native
+          useNativeDriver: true
+        })
+      ]).start();
+    });
   });
 
   return (
     <View style={styles.row}>
       {cells.map((cell, ind) => {
-        const animateCell = shouldAnimateCell && ind === curCellIndex;
-        const backgroundColor = cell.color;
+        const shakeCell2 = canAnimate && shakeCell && ind === curCellIndex;
+        const flipCell2 = canAnimate && flipCell;
+        // const backgroundColor = cell.color;
 
         return (
           <Animated.View
             key={`cell-${ind}`}
             style={[
               styles.cell,
-              animateCell && {
+              { backgroundColor: CellColors.TRANSPARENT },
+              shakeCell2 && {
                 transform: [{ scale: popIn }]
               },
-              { backgroundColor: backgroundColor }
+              flipCell2 && {
+                transform: [
+                  {
+                    rotateX: flipCardAnimations[ind].interpolate({
+                      inputRange: [0, 1],
+                      outputRange: ["0deg", "180deg"]
+                    })
+                  }
+                ],
+                backgroundColor: flipCardColor[ind].interpolate({
+                  inputRange: [0, 1],
+                  outputRange: [CellColors.TRANSPARENT, cell.color]
+                })
+              }
             ]}
           >
             <Text style={styles.text}>{cell.value}</Text>
