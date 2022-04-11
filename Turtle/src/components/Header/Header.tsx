@@ -7,19 +7,21 @@ interface IHeader {
 }
 
 const Header = (params: IHeader) => {
-  const { onInstructionsOpen } = params
+  const { onInstructionsOpen } = params;
 
   return (
     <View style={styles.container}>
       <View style={styles.row}>
         <View style={styles.section}>
           <Pressable onPress={() => onInstructionsOpen()}>
-            <HelpIcon />
+            <Text>Howdy</Text>
+            {/*<HelpIcon />*/}
           </Pressable>
         </View>
         <View style={styles.section}>
           <Pressable>
-            <CogIcon />
+            <Text>Howdy</Text>
+            {/*<CogIcon />*/}
           </Pressable>
         </View>
       </View>
@@ -40,7 +42,7 @@ const styles = StyleSheet.create({
   },
   row: {
     width: "100%",
-    maxWidth: "1300px",
+    maxWidth: 1300,
     display: "flex",
     flexDirection: "row",
     alignItems: "center",

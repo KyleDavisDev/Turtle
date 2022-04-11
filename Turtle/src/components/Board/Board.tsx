@@ -41,7 +41,7 @@ const Board = (props: IBoardProps) => {
         const triggerCellShake: boolean = shouldAnimateCell !== null && canAnimate;
         const triggerCellFlip: boolean = canAnimate && index === curRow - 1 && flipCells;
 
-        if (index > 1) return <></>;
+        // if (index > 1) return <></>;
         return (
           <Animated.View
             key={`boardRow-${index}`}

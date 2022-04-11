@@ -115,7 +115,7 @@ const ModalInstructions = (props: IModalInstructions) => {
 
 const styles = StyleSheet.create({
   overlay: {
-    cursor: "normal",
+    // cursor: "normal",
     width: "100%",
     height: "100vh",
     position: "absolute",
@@ -128,7 +128,8 @@ const styles = StyleSheet.create({
     width: "100%",
     maxWidth: 400,
     padding: "10px",
-    border: "1px solid #444",
+    borderWidth: 1,
+    borderColor: "#444",
     borderRadius: 5,
     backgroundColor: "#222",
     color: "white"

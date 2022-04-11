@@ -63,7 +63,8 @@ const styles = StyleSheet.create({
     // width: 300,
     maxWidth: 300,
     padding: "10px",
-    border: "1px solid #444",
+    borderWidth: 1,
+    borderColor: "#444",
     borderRadius: 5,
     backgroundColor: "#222",
     color: "white"
