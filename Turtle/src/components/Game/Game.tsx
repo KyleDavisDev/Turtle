@@ -23,7 +23,7 @@ const Game = (props: IGameProps) => {
   const [boardFrame, setBoardFrame] = useState<ICell[][]>(initBoard);
   const [curRow, setCurRow] = useState<number>(0);
   const [pulseRowAnimation, setPulseRowAnimation] = useState<null | boolean>(null);
-  const [pulseCellAnimation, setPulseCellAnimation] = useState<null | boolean>(null);
+  const [pulseCellAnimation, setPulseCellAnimation] = useState<null | boolean>(true);
   const wordToGuessLength = boardFrame[0].length;
 
   const onKeyPress = (key: string) => {
