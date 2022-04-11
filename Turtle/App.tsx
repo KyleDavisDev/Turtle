@@ -13,18 +13,20 @@ const newGame = factory.spanishMode();
 export default function App() {
   const [game, setGame] = useState<IGame>(newGame);
   const [isWinner, setIsWinner] = useState<boolean>(false);
-  const [displayInstructions, setDisplayInstructions] = useState<boolean>(true);
+  const [displayInstructions, setDisplayInstructions] = useState<boolean>(false);
   const [pauseGame, setPauseGame] = useState<boolean>(false);
 
   const onWinner = () => {
     setIsWinner(true);
     setPauseGame(true);
-
-    console.log("am i here?");
   };
 
   const onInstructionsClose = () => {
     setDisplayInstructions(false);
+    // setGame();
+  };
+  const onInstructionsOpen = () => {
+    setDisplayInstructions(true);
     // setGame();
   };
 
@@ -35,9 +37,9 @@ export default function App() {
 
   return (
     <View style={styles.container}>
-      {displayInstructions && <ModalInstructions onClose={onInstructionsClose} />}
+      <Header onInstructionsOpen={onInstructionsOpen} />
+      {displayInstructions && <ModalInstructions onClose={onInstructionsClose} shouldDisplay={displayInstructions} />}
       {isWinner && <ModalWinner onGameModeSelect={onNewGameModeSelect} />}
-      <Header />
       <Game gameBLL={game} onWin={onWinner} />
     </View>
   );
@@ -47,7 +49,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#222",
-    alignItems: "center",
-    justifyContent: "center"
+    alignItems: "center"
+    // justifyContent: "center"
   }
 });
