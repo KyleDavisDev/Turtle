@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { Animated, StyleSheet, View } from "react-native";
+import { Animated, View } from "react-native";
 import { Row, ICell } from "./components/Row/Row";
 import { CELL_ANIMATION_DURATION } from "../../Settings";
 

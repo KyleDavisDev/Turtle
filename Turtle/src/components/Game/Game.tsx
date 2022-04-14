@@ -83,17 +83,21 @@ const Game = (props: IGameProps) => {
         }
       });
 
-      if (isWinner(boardFrame[curRow])) {
-        onIsWinner();
-        return;
-      }
-
-      setUsedLetters([...usedLetters, ...word.split("")]);
       setCurRow(curRow + 1);
+      setUsedLetters([...usedLetters, ...word.split("")]);
+      setPulseCellAnimation(!pulseCellAnimation);
       setIsPaused(true);
       setTimeout(() => setIsPaused(false), CELL_ANIMATION_DURATION * wordToGuessLength);
 
-      setPulseCellAnimation(null);
+      if (isWinner(boardFrame[curRow])) {
+        setTimeout(() => {
+          onIsWinner();
+        }, CELL_ANIMATION_DURATION * wordToGuessLength);
+
+        return;
+      }
+
+      setPulseRowAnimation(null);
     } catch (e) {
       console.log(e);
       setPulseCellAnimation(null);
@@ -140,7 +144,8 @@ const Game = (props: IGameProps) => {
         shouldAnimateRow={pulseRowAnimation}
         curRow={curRow}
       />
-      <KeyboardArea onKeyPress={onKeyPress} usedLetters={usedLetters} isPaused={isPaused} />
+      <KeyboardArea onKeyPress={onKeyPress} usedLetters={curRow > 0 ? boardFrame[curRow - 1] : []}
+                    isPaused={isPaused} />
     </>
   );
 };

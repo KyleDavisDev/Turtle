@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { Platform, Pressable, StyleSheet, Text, useWindowDimensions, View } from "react-native";
 import { Feather } from "@expo/vector-icons";
-import { CELL_ANIMATION_DURATION, Colors } from "../../Settings";
+import { Colors } from "../../Settings";
+import { ICell } from "../Board/components/Row/Row";
 
 interface KeyboardAreaProps {
   onKeyPress: (char: string) => void;
-  usedLetters: string[];
+  usedLetters: ICell[];
   isPaused: boolean;
 }
 
@@ -58,9 +59,25 @@ const keyboard: KeyboardLetter[][] = [
 ];
 
 const KeyboardArea = (props: KeyboardAreaProps) => {
-  const { onKeyPress, usedLetters, isPaused } = props;
-
   const windowWidth = useWindowDimensions().width;
+  const { onKeyPress, usedLetters, isPaused } = props;
+  const [usedLetterDict, setUsedLetterDict] = useState<{ [key: string]: ICell }>({});
+
+  useEffect(() => {
+    if (isPaused) return;
+
+    const letters: { [key: string]: ICell } = {};
+    usedLetters.forEach(letter => {
+      if (!letter || !letter.value) return;
+
+      if (!usedLetterDict[letter.value] || letter.color === Colors.GREEN) {
+        letters[letter.value] = letter;
+      }
+    });
+
+    setUsedLetterDict({ ...usedLetterDict, ...letters });
+  }, [isPaused]);
+
 
   useEffect(() => {
     if (Platform.OS === "web") {
@@ -82,13 +99,16 @@ const KeyboardArea = (props: KeyboardAreaProps) => {
     }
   });
 
+
   return (
     <View style={[styles.container, { maxWidth: windowWidth, padding: 10 }]}>
+
       {keyboard.map((row, rowInd) => {
         return (
           <View key={`keyboard-${rowInd}`} style={[styles.row]}>
             {row.map(key => {
-              const isUsed = usedLetters.includes(key.value);
+              const bkColor = usedLetterDict && usedLetterDict[key.value] ? usedLetterDict[key.value].color : Colors.GRAY;
+
               return (
                 <Pressable
                   key={`individualKey-${key.value}`}
@@ -105,16 +125,16 @@ const KeyboardArea = (props: KeyboardAreaProps) => {
                         marginLeft: windowWidth < 400 ? 3 : 5,
                         marginBottom: windowWidth < 400 ? 4 : 8
                       },
-                      isUsed && styles.cellDisabled
+                      { backgroundColor: bkColor }
                     ]}
                   >
                     <Text
                       style={[
-                        styles.text,
-                        isUsed && styles.textDisabled,
-                        {
-                          fontSize: windowWidth < 400 ? 12 : 16
-                        }
+                        styles.text
+                        // isUsed && styles.textDisabled,
+                        // {
+                        //   fontSize: windowWidth < 400 ? 12 : 16
+                        // }
                       ]}
                     >
                       {key.displayValue ?? key.value}
@@ -145,7 +165,6 @@ const styles = StyleSheet.create({
     marginLeft: 3,
     marginBottom: 4,
     borderRadius: 5,
-    backgroundColor: Colors.GRAY,
     maxHeight: 60,
     display: "flex",
     justifyContent: "center",
