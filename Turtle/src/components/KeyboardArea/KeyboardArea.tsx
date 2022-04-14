@@ -138,10 +138,6 @@ const KeyboardArea = (props: KeyboardAreaProps) => {
                     <Text
                       style={[
                         styles.text
-                        // isUsed && styles.textDisabled,
-                        // {
-                        //   fontSize: windowWidth < 400 ? 12 : 16
-                        // }
                       ]}
                     >
                       {key.displayValue ?? key.value}
