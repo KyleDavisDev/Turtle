@@ -31,13 +31,18 @@ export default function App() {
   };
 
   const onNewGameModeSelect = (mode: string): void => {
+    // TODO: Adapter here?
     switch (mode.toLowerCase()) {
-      case "standard": {
+      case "scrabble": {
         setGame(factory.standardGame());
         break;
       }
       case "spanish": {
-        setGame(factory.standardGame());
+        setGame(factory.spanishMode());
+        break;
+      }
+      case "vanderbilt": {
+        setGame(factory.vanderbiltMode());
         break;
       }
     }
