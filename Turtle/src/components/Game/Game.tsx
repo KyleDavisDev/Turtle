@@ -88,7 +88,7 @@ const Game = (props: IGameProps) => {
         return;
       }
 
-      setUsedLetters(word.split(""));
+      setUsedLetters([...usedLetters, ...word.split("")]);
       setCurRow(curRow + 1);
       setIsPaused(true);
       setTimeout(() => setIsPaused(false), CELL_ANIMATION_DURATION * wordToGuessLength);
