@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet, Text, View, Button, Pressable } from "react-native";
+import { StyleSheet, Text, View, Pressable } from "react-native";
 
 export interface IModalProps {
   onGameModeSelect: (mode: string) => void;

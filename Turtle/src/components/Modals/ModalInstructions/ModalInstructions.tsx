@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 
 import { Pressable, StyleSheet, Text, View } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { CellColors } from "../../Board/components/Row/Row";
+import { Colors } from "../../../../App";
 
 interface IModalInstructions {
   onClose: () => void;
@@ -185,7 +185,7 @@ const styles = StyleSheet.create({
     textTransform: "uppercase"
   },
   correctBox: {
-    backgroundColor: CellColors.GREEN,
+    backgroundColor: Colors.GREEN,
     borderWidth: 1,
     borderColor: "grey",
     width: 40,
@@ -197,7 +197,7 @@ const styles = StyleSheet.create({
     textTransform: "uppercase"
   },
   wrongSpotBox: {
-    backgroundColor: CellColors.YELLOW,
+    backgroundColor: Colors.YELLOW,
     borderWidth: 1,
     borderColor: "grey",
     width: 40,
@@ -209,7 +209,7 @@ const styles = StyleSheet.create({
     textTransform: "uppercase"
   },
   absentBox: {
-    backgroundColor: CellColors.GRAY,
+    backgroundColor: Colors.GRAY,
     borderWidth: 1,
     borderColor: "grey",
     width: 40,

@@ -1,16 +1,10 @@
-import { StyleSheet, Text, View, Animated, Button, Easing } from "react-native";
-import React, { useRef } from "react";
+import { StyleSheet, Text, View, Animated, Easing } from "react-native";
+import React from "react";
+import { Colors } from "../../../../../App";
 
 export interface ICell {
   value: string;
-  color: CellColors;
-}
-
-export enum CellColors {
-  "TRANSPARENT" = "rgba(0,0,0,1)",
-  "GREEN" = "rgb(39, 155, 78)",
-  "GRAY" = "rgb(67, 77, 93)",
-  "YELLOW" = "rgb(187, 145, 18)"
+  color: Colors;
 }
 
 export interface RowProps {
@@ -114,7 +108,7 @@ const Row = (props: RowProps) => {
                 ],
                 backgroundColor: flipCardColor[ind].interpolate({
                   inputRange: [0, 1],
-                  outputRange: [CellColors.TRANSPARENT, cell.color]
+                  outputRange: [Colors.TRANSPARENT, cell.color]
                 })
               }
             ]}

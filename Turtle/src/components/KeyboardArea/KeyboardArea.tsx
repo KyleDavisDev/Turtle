@@ -90,7 +90,6 @@ const KeyboardArea = (props: KeyboardAreaProps) => {
               return (
                 <Pressable
                   key={`individualKey-${key.value}`}
-                  disabled={isDisabled}
                   onPress={() => onKeyPress(key.value)}
                 >
                   <View
@@ -111,8 +110,7 @@ const KeyboardArea = (props: KeyboardAreaProps) => {
                         styles.text,
                         isDisabled && styles.textDisabled,
                         {
-                          fontSize: windowWidth < 400 ? 12 : 16,
-                          textTransform: "uppercase"
+                          fontSize: windowWidth < 400 ? 12 : 16
                         }
                       ]}
                     >
@@ -158,7 +156,8 @@ const styles = StyleSheet.create({
     color: "white",
     fontSize: 16,
     fontWeight: "bold",
-    fontFamily: "Helvetica Neue"
+    fontFamily: "Helvetica Neue",
+    textTransform: "uppercase"
   },
   textDisabled: {
     color: "grey"

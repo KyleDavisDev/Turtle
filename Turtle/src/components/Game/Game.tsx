@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import { Board } from "../Board/Board";
 import { IGame } from "../../BLL/Game/IGame";
-import { CellColors, ICell } from "../Board/components/Row/Row";
+import { ICell } from "../Board/components/Row/Row";
 import { KeyboardArea } from "../KeyboardArea/KeyboardArea";
+import { Colors } from "../../../App";
 
 interface IGameProps {
   gameBLL: IGame;
@@ -16,12 +17,13 @@ const Game = (props: IGameProps) => {
     return row.map(() => {
       return {
         value: "",
-        color: CellColors.TRANSPARENT
+        color: Colors.TRANSPARENT
       };
     });
   });
   const [boardFrame, setBoardFrame] = useState<ICell[][]>(initBoard);
   const [curRow, setCurRow] = useState<number>(0);
+  const [usedLetters, setUsedLetters] = useState<string[]>([]);
   const [pulseRowAnimation, setPulseRowAnimation] = useState<null | boolean>(null);
   const [pulseCellAnimation, setPulseCellAnimation] = useState<null | boolean>(true);
   const wordToGuessLength = boardFrame[0].length;
@@ -71,11 +73,11 @@ const Game = (props: IGameProps) => {
       // TODO: Maybe adapter pattern here?
       gameBLL.guessWord(word).forEach((res, ind) => {
         if (res === "/") {
-          boardFrame[curRow][ind] = { color: CellColors.GRAY, value: word[ind] };
+          boardFrame[curRow][ind] = { color: Colors.GRAY, value: word[ind] };
         } else if (res === "Y") {
-          boardFrame[curRow][ind] = { color: CellColors.YELLOW, value: word[ind] };
+          boardFrame[curRow][ind] = { color: Colors.YELLOW, value: word[ind] };
         } else if (res === "G") {
-          boardFrame[curRow][ind] = { color: CellColors.GREEN, value: word[ind] };
+          boardFrame[curRow][ind] = { color: Colors.GREEN, value: word[ind] };
         }
       });
 
@@ -84,6 +86,7 @@ const Game = (props: IGameProps) => {
         return;
       }
 
+      setUsedLetters(word.split(""));
       setCurRow(curRow + 1);
 
       setPulseCellAnimation(null);
@@ -117,7 +120,7 @@ const Game = (props: IGameProps) => {
 
   const isWinner = (row: ICell[]) => {
     return row.every(cell => {
-      return cell.color === CellColors.GREEN;
+      return cell.color === Colors.GREEN;
     });
   };
 
@@ -133,7 +136,7 @@ const Game = (props: IGameProps) => {
         shouldAnimateRow={pulseRowAnimation}
         curRow={curRow}
       />
-      <KeyboardArea onKeyPress={onKeyPress} disabledKeyList={[]} />
+      <KeyboardArea onKeyPress={onKeyPress} disabledKeyList={usedLetters} />
     </>
   );
 };
