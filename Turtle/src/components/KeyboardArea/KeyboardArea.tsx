@@ -66,6 +66,12 @@ const KeyboardArea = (props: KeyboardAreaProps) => {
   useEffect(() => {
     if (isPaused) return;
 
+    const hasGameReset = Object.keys(usedLetterDict).length > 0 && usedLetters.length === 0;
+    if (hasGameReset) {
+      setUsedLetterDict({});
+      return;
+    }
+
     const letters: { [key: string]: ICell } = {};
     usedLetters.forEach(letter => {
       if (!letter || !letter.value) return;
@@ -76,6 +82,7 @@ const KeyboardArea = (props: KeyboardAreaProps) => {
     });
 
     setUsedLetterDict({ ...usedLetterDict, ...letters });
+
   }, [isPaused]);
 
 

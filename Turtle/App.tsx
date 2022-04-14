@@ -14,6 +14,7 @@ export default function App() {
   const [isWinner, setIsWinner] = useState<boolean>(false);
   const [displayInstructions, setDisplayInstructions] = useState<boolean>(false);
   const [pauseGame, setPauseGame] = useState<boolean>(false);
+  const [resetGame, setResetGame] = useState<boolean | null>(null);
 
   const onWinner = () => {
     setIsWinner(true);
@@ -22,16 +23,28 @@ export default function App() {
 
   const onInstructionsClose = () => {
     setDisplayInstructions(false);
-    // setGame();
+    setPauseGame(false);
   };
   const onInstructionsOpen = () => {
     setDisplayInstructions(true);
-    // setGame();
+    setPauseGame(true);
   };
 
   const onNewGameModeSelect = (mode: string): void => {
-    setGame(factory.standardGame());
+    switch (mode.toLowerCase()) {
+      case "standard": {
+        setGame(factory.standardGame());
+        break;
+      }
+      case "spanish": {
+        setGame(factory.standardGame());
+        break;
+      }
+    }
+
     setIsWinner(false);
+    setPauseGame(false);
+    setResetGame(!resetGame);
   };
 
   return (
@@ -39,7 +52,7 @@ export default function App() {
       <Header onInstructionsOpen={onInstructionsOpen} />
       {displayInstructions && <ModalInstructions onClose={onInstructionsClose} shouldDisplay={displayInstructions} />}
       {isWinner && <ModalWinner onGameModeSelect={onNewGameModeSelect} />}
-      <Game gameBLL={game} onWin={onWinner} />
+      <Game gameBLL={game} onWin={onWinner} pauseGame={pauseGame} resetGame={resetGame} />
     </View>
   );
 }

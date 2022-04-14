@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Board } from "../Board/Board";
 import { IGame } from "../../BLL/Game/IGame";
 import { ICell } from "../Board/components/Row/Row";
@@ -8,26 +8,32 @@ import { CELL_ANIMATION_DURATION, Colors } from "../../Settings";
 interface IGameProps {
   gameBLL: IGame;
   onWin: () => void;
+  pauseGame: boolean;
+  resetGame: boolean | null;
 }
 
 const Game = (props: IGameProps) => {
-  const { gameBLL, onWin } = props;
+  const { gameBLL, onWin, pauseGame, resetGame } = props;
 
-  const initBoard: ICell[][] = gameBLL.getBoardState().map(row => {
-    return row.map(() => {
-      return {
-        value: "",
-        color: Colors.TRANSPARENT
-      };
+  const newBoard = (game: IGame): ICell[][] => {
+    return gameBLL.getBoardState().map(row => {
+      return row.map(() => {
+        return {
+          value: "",
+          color: Colors.TRANSPARENT
+        };
+      });
     });
-  });
-  const [boardFrame, setBoardFrame] = useState<ICell[][]>(initBoard);
+  };
+
+  const [boardFrame, setBoardFrame] = useState<ICell[][]>(newBoard(gameBLL));
   const [curRow, setCurRow] = useState<number>(0);
   const [usedLetters, setUsedLetters] = useState<string[]>([]);
   const [isPaused, setIsPaused] = useState<boolean>(false);
   const [pulseRowAnimation, setPulseRowAnimation] = useState<null | boolean>(null);
   const [pulseCellAnimation, setPulseCellAnimation] = useState<null | boolean>(true);
   const wordToGuessLength = boardFrame[0].length;
+
 
   const onKeyPress = (key: string) => {
     if (isPaused) return;
@@ -135,6 +141,19 @@ const Game = (props: IGameProps) => {
     onWin();
   };
 
+  useEffect(() => {
+    setIsPaused(pauseGame);
+  }, [pauseGame]);
+
+  useEffect(() => {
+    if (resetGame === null) return;
+    
+    setBoardFrame(newBoard(gameBLL));
+    setCurRow(0);
+    setUsedLetters([]);
+    setIsPaused(false);
+  }, [resetGame]);
+
   return (
     <>
       <Board
@@ -143,7 +162,8 @@ const Game = (props: IGameProps) => {
         shouldAnimateRow={pulseRowAnimation}
         curRow={curRow}
       />
-      <KeyboardArea onKeyPress={onKeyPress} usedLetters={curRow > 0 ? boardFrame[curRow - 1] : []}
+      <KeyboardArea onKeyPress={onKeyPress}
+                    usedLetters={curRow > 0 ? boardFrame[curRow - 1] : []}
                     isPaused={isPaused} />
     </>
   );
