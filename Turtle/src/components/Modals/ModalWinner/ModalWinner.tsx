@@ -1,5 +1,6 @@
 import React from "react";
 import { StyleSheet, Text, View, Pressable } from "react-native";
+import { Colors } from "../../../Settings";
 
 export interface IModalProps {
   onGameModeSelect: (mode: string) => void;
@@ -71,6 +72,7 @@ const styles = StyleSheet.create({
   },
   h1: {
     fontWeight: "bold",
+    color: Colors.WHITE,
     fontSize: 16,
     textTransform: "uppercase",
     textAlign: "center",
