@@ -1,6 +1,6 @@
 import { StyleSheet, Text, View, Animated, Easing } from "react-native";
 import React from "react";
-import { Colors } from "../../../../../App";
+import { Colors } from "../../../../Styles";
 
 export interface ICell {
   value: string;

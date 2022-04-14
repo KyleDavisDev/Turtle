@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { Platform, Pressable, StyleSheet, Text, useWindowDimensions, View } from "react-native";
 import { Feather } from "@expo/vector-icons";
+import { Colors } from "../../Styles";
 
 interface KeyboardAreaProps {
   onKeyPress(char: string): void;
@@ -160,7 +161,7 @@ const styles = StyleSheet.create({
     textTransform: "uppercase"
   },
   textDisabled: {
-    color: "grey"
+    color: Colors.GRAY
   }
 });
 

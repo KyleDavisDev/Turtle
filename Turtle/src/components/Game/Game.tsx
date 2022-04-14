@@ -3,7 +3,7 @@ import { Board } from "../Board/Board";
 import { IGame } from "../../BLL/Game/IGame";
 import { ICell } from "../Board/components/Row/Row";
 import { KeyboardArea } from "../KeyboardArea/KeyboardArea";
-import { Colors } from "../../../App";
+import { Colors } from "../../Styles";
 
 interface IGameProps {
   gameBLL: IGame;
