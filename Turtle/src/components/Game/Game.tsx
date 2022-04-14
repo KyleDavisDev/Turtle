@@ -78,6 +78,7 @@ const Game = (props: IGameProps) => {
     }
 
     try {
+
       // TODO: Maybe adapter pattern here?
       gameBLL.guessWord(word).forEach((res, ind) => {
         if (res === "/") {
@@ -147,7 +148,7 @@ const Game = (props: IGameProps) => {
 
   useEffect(() => {
     if (resetGame === null) return;
-    
+
     setBoardFrame(newBoard(gameBLL));
     setCurRow(0);
     setUsedLetters([]);
