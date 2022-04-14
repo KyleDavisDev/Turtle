@@ -3,56 +3,50 @@ import { Game } from "../Game/Game";
 import { INewWordStrategy } from "../Strategies/NewWordStrategy/INewWordStrategy";
 import { IValidateWordStrategy } from "../Strategies/ValidateWordStrategy/IValidateWordStrategy";
 import { Settings } from "../Settings/Settings";
-import { ValidateWordFileStrategy } from "../Strategies/ValidateWordStrategy/ValidateWordFileStrategy/ValidateWordFileStrategy";
+import {
+  ValidateWordFileStrategy
+} from "../Strategies/ValidateWordStrategy/ValidateWordFileStrategy/ValidateWordFileStrategy";
 import { ISettings } from "../Settings/ISettings";
 import { NewWordFileStrategy } from "../Strategies/NewWordStrategy/NewWordFileStrategy/NewWordFileStrategy";
 
-import wordsToGuessFrom from "../Strategies/NewWordStrategy/NewWordFileStrategy/words.json";
-
-// words from https://github.com/benjamincrom/scrabble/blob/master/scrabble/dictionary.json
-import scrabbleWords from "../Strategies/ValidateWordStrategy/ValidateWordFileStrategy/scrabbleWords.json";
-
-// words from https://github.com/lorenbrichter/Words
-import spanishWords from "../Strategies/ValidateWordStrategy/ValidateWordFileStrategy/spanishWords.json";
-import { ValidateWordAPIStrategy } from "../Strategies/ValidateWordStrategy/ValidateWordAPIStrategy/ValidateWordAPIStrategy";
+import {
+  ValidateWordAPIStrategy
+} from "../Strategies/ValidateWordStrategy/ValidateWordAPIStrategy/ValidateWordAPIStrategy";
 import { NewWordAPIStrategy } from "../Strategies/NewWordStrategy/NewWordAPIStrategy/NewWordAPIStrategy";
 import { IGameFactory } from "./IGameFactory";
 
+import wordsToGuessFrom from "../Strategies/NewWordStrategy/NewWordFileStrategy/words.json";
+// words from https://github.com/benjamincrom/scrabble/blob/master/scrabble/dictionary.json
+import scrabbleWords from "../Strategies/ValidateWordStrategy/ValidateWordFileStrategy/scrabbleWords.json";
+// words from https://github.com/lorenbrichter/Words
+import spanishWords from "../Strategies/ValidateWordStrategy/ValidateWordFileStrategy/spanishWords.json";
+import vanderbiltWords from "../Strategies/NewWordStrategy/NewWordFileStrategy/vanderbiltWords.json";
+
 enum gameModes {
   standard = "standard",
+  spanish = "spanish",
+  vanderbilt = "vanderbilt",
   offline = "offline",
   online = "online",
-  badWords = "badWords"
 }
 
 class GameFactory implements IGameFactory {
   private _gameModesSelected: gameModes[] = [];
 
-  constructor() {}
+  constructor() {
+  }
 
   standardGame = (): IGame => {
     const settings: ISettings = new Settings();
     const newWordStrategy: INewWordStrategy = new NewWordFileStrategy({ possibleWords: scrabbleWords, settings });
-    const possibleWords: IValidateWordStrategy = new ValidateWordFileStrategy({ possibleWords: scrabbleWords });
+    const validateWordStrat: IValidateWordStrategy = new ValidateWordFileStrategy({ possibleWords: scrabbleWords });
 
     const wordToGuess: string = newWordStrategy.getWord();
     console.log(wordToGuess);
-    const game: IGame = new Game({ wordToGuess, settings, validateWordStrategy: possibleWords });
+    const game: IGame = new Game({ wordToGuess, settings, validateWordStrategy: validateWordStrat });
 
     this._gameModesSelected.push(gameModes.standard);
 
-    return game;
-  };
-
-  offlineMode = (): IGame => {
-    const settings: ISettings = new Settings();
-    const newWordStrategy: INewWordStrategy = new NewWordFileStrategy({ possibleWords: scrabbleWords, settings });
-    const possibleWords: IValidateWordStrategy = new ValidateWordFileStrategy({ possibleWords: scrabbleWords });
-
-    const wordToGuess: string = newWordStrategy.getWord();
-    const game: IGame = new Game({ wordToGuess, settings, validateWordStrategy: possibleWords });
-
-    this._gameModesSelected.push(gameModes.offline);
     return game;
   };
 
@@ -68,8 +62,33 @@ class GameFactory implements IGameFactory {
 
     const game: IGame = new Game({ wordToGuess, settings, validateWordStrategy: possibleWords });
 
-    this._gameModesSelected.push(gameModes.badWords);
+    this._gameModesSelected.push(gameModes.spanish);
 
+    return game;
+  };
+
+  vanderbiltMode = (): IGame => {
+    const settings: ISettings = new Settings();
+    const newWordStrategy: INewWordStrategy = new NewWordFileStrategy({ possibleWords: vanderbiltWords, settings });
+    const wordToGuess: string = newWordStrategy.getWord();
+    const possibleWords: IValidateWordStrategy = new ValidateWordFileStrategy({ possibleWords: scrabbleWords.concat(wordToGuess) });
+
+    const game: IGame = new Game({ wordToGuess, settings, validateWordStrategy: possibleWords });
+
+    this._gameModesSelected.push(gameModes.vanderbilt);
+
+    return game;
+  };
+
+  offlineMode = (): IGame => {
+    const settings: ISettings = new Settings();
+    const newWordStrategy: INewWordStrategy = new NewWordFileStrategy({ possibleWords: scrabbleWords, settings });
+    const possibleWords: IValidateWordStrategy = new ValidateWordFileStrategy({ possibleWords: scrabbleWords });
+
+    const wordToGuess: string = newWordStrategy.getWord();
+    const game: IGame = new Game({ wordToGuess, settings, validateWordStrategy: possibleWords });
+
+    this._gameModesSelected.push(gameModes.offline);
     return game;
   };
 
@@ -92,7 +111,8 @@ class GameFactory implements IGameFactory {
     if (lastModePlayed === "standard") return this.standardGame();
     if (lastModePlayed === "offline") return this.offlineMode();
     if (lastModePlayed === "online") return this.onlineMode();
-    if (lastModePlayed === "badWords") return this.spanishMode();
+    if (lastModePlayed === "spanish") return this.spanishMode();
+    if (lastModePlayed === "vanderbilt") return this.vanderbiltMode();
 
     return this.standardGame();
   };
