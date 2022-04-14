@@ -20,8 +20,8 @@ const ModalWinner = (params: IModalProps) => {
 
         <View style={styles.options}>
           <View style={styles.option}>
-            <Pressable style={styles.button} onPress={() => onGameModeSelect("Standard")}>
-              <Text>Standard Game</Text>
+            <Pressable style={styles.button} onPress={() => onGameModeSelect("Scrabble")}>
+              <Text>Scrabble Game</Text>
             </Pressable>
           </View>
           <View style={styles.option}>
@@ -30,18 +30,8 @@ const ModalWinner = (params: IModalProps) => {
             </Pressable>
           </View>
           <View style={styles.option}>
-            <Pressable style={styles.button}>
-              <Text>New Game</Text>
-            </Pressable>
-          </View>
-          <View style={styles.option}>
-            <Pressable style={styles.button}>
-              <Text>New Game</Text>
-            </Pressable>
-          </View>
-          <View style={styles.option}>
-            <Pressable style={styles.button}>
-              <Text>New Game</Text>
+            <Pressable style={styles.button} onPress={() => onGameModeSelect("Vanderbilt")}>
+              <Text>Vandy Game</Text>
             </Pressable>
           </View>
         </View>
