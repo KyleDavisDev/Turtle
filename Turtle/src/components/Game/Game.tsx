@@ -92,12 +92,13 @@ const Game = (props: IGameProps) => {
 
       if (isWinner(boardFrame[curRow])) {
         setTimeout(() => {
+          setIsPaused(true);
           onIsWinner();
         }, CELL_ANIMATION_DURATION * wordToGuessLength);
         return;
       }
     } catch (e) {
-      console.log(e);
+      // TODO: What do we do here?
       setPulseCellAnimation(null);
       setPulseRowAnimation(!pulseRowAnimation);
     }
