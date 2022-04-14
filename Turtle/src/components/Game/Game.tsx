@@ -16,7 +16,7 @@ const Game = (props: IGameProps) => {
   const { gameBLL, onWin, pauseGame, resetGame } = props;
 
   const newBoard = (game: IGame): ICell[][] => {
-    return gameBLL.getBoardState().map(row => {
+    return game.getBoardState().map(row => {
       return row.map(() => {
         return {
           value: "",
