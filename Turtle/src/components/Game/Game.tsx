@@ -3,7 +3,7 @@ import { Board } from "../Board/Board";
 import { IGame } from "../../BLL/Game/IGame";
 import { ICell } from "../Board/components/Row/Row";
 import { KeyboardArea } from "../KeyboardArea/KeyboardArea";
-import { Colors } from "../../Styles";
+import { CELL_ANIMATION_DURATION, Colors } from "../../Settings";
 
 interface IGameProps {
   gameBLL: IGame;
@@ -24,11 +24,13 @@ const Game = (props: IGameProps) => {
   const [boardFrame, setBoardFrame] = useState<ICell[][]>(initBoard);
   const [curRow, setCurRow] = useState<number>(0);
   const [usedLetters, setUsedLetters] = useState<string[]>([]);
+  const [isPaused, setIsPaused] = useState<boolean>(false);
   const [pulseRowAnimation, setPulseRowAnimation] = useState<null | boolean>(null);
   const [pulseCellAnimation, setPulseCellAnimation] = useState<null | boolean>(true);
   const wordToGuessLength = boardFrame[0].length;
 
   const onKeyPress = (key: string) => {
+    if (isPaused) return;
     key = key.toLowerCase();
 
     const userGuess = boardFrame[curRow].reduce((prev, cur) => {
@@ -88,6 +90,8 @@ const Game = (props: IGameProps) => {
 
       setUsedLetters(word.split(""));
       setCurRow(curRow + 1);
+      setIsPaused(true);
+      setTimeout(() => setIsPaused(false), CELL_ANIMATION_DURATION * wordToGuessLength);
 
       setPulseCellAnimation(null);
     } catch (e) {
@@ -136,7 +140,7 @@ const Game = (props: IGameProps) => {
         shouldAnimateRow={pulseRowAnimation}
         curRow={curRow}
       />
-      <KeyboardArea onKeyPress={onKeyPress} disabledKeyList={usedLetters} />
+      <KeyboardArea onKeyPress={onKeyPress} usedLetters={usedLetters} isPaused={isPaused} />
     </>
   );
 };

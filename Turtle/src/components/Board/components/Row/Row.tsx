@@ -1,6 +1,6 @@
 import { StyleSheet, Text, View, Animated, Easing } from "react-native";
 import React from "react";
-import { Colors } from "../../../../Styles";
+import { CELL_ANIMATION_DURATION, Colors } from "../../../../Settings";
 
 export interface ICell {
   value: string;
@@ -50,12 +50,11 @@ const Row = (props: RowProps) => {
       })
     ]).start();
 
-    const firstHalf = 175;
-    const secondHalf = 175;
-    const combined = firstHalf + secondHalf;
+    const firstHalf = CELL_ANIMATION_DURATION / 2;
+    const secondHalf = CELL_ANIMATION_DURATION / 2;
     cells.forEach((_, ind) => {
       Animated.sequence([
-        Animated.delay(combined * ind),
+        Animated.delay(CELL_ANIMATION_DURATION * ind),
         Animated.timing(flipCardAnimations[ind], {
           toValue: 0.5,
           duration: firstHalf,
@@ -70,7 +69,7 @@ const Row = (props: RowProps) => {
       ]).start();
 
       Animated.sequence([
-        Animated.delay(combined * ind + firstHalf),
+        Animated.delay(CELL_ANIMATION_DURATION * ind + firstHalf),
         Animated.timing(flipCardColor[ind], {
           toValue: 1,
           duration: 1,

@@ -1,12 +1,12 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Platform, Pressable, StyleSheet, Text, useWindowDimensions, View } from "react-native";
 import { Feather } from "@expo/vector-icons";
-import { Colors } from "../../Styles";
+import { CELL_ANIMATION_DURATION, Colors } from "../../Settings";
 
 interface KeyboardAreaProps {
-  onKeyPress(char: string): void;
-
-  disabledKeyList: string[];
+  onKeyPress: (char: string) => void;
+  usedLetters: string[];
+  isPaused: boolean;
 }
 
 interface KeyboardLetter {
@@ -58,7 +58,8 @@ const keyboard: KeyboardLetter[][] = [
 ];
 
 const KeyboardArea = (props: KeyboardAreaProps) => {
-  const { onKeyPress, disabledKeyList } = props;
+  const { onKeyPress, usedLetters, isPaused } = props;
+
   const windowWidth = useWindowDimensions().width;
 
   useEffect(() => {
@@ -87,10 +88,11 @@ const KeyboardArea = (props: KeyboardAreaProps) => {
         return (
           <View key={`keyboard-${rowInd}`} style={[styles.row]}>
             {row.map(key => {
-              const isDisabled = disabledKeyList.includes(key.value);
+              const isUsed = usedLetters.includes(key.value);
               return (
                 <Pressable
                   key={`individualKey-${key.value}`}
+                  disabled={isPaused}
                   onPress={() => onKeyPress(key.value)}
                 >
                   <View
@@ -103,13 +105,13 @@ const KeyboardArea = (props: KeyboardAreaProps) => {
                         marginLeft: windowWidth < 400 ? 3 : 5,
                         marginBottom: windowWidth < 400 ? 4 : 8
                       },
-                      isDisabled && styles.cellDisabled
+                      isUsed && styles.cellDisabled
                     ]}
                   >
                     <Text
                       style={[
                         styles.text,
-                        isDisabled && styles.textDisabled,
+                        isUsed && styles.textDisabled,
                         {
                           fontSize: windowWidth < 400 ? 12 : 16
                         }
@@ -136,7 +138,6 @@ const styles = StyleSheet.create({
     display: "flex",
     flexDirection: "row",
     justifyContent: "center"
-    // marginBottom: 5,
   },
   cell: {
     padding: 7,
@@ -144,24 +145,25 @@ const styles = StyleSheet.create({
     marginLeft: 3,
     marginBottom: 4,
     borderRadius: 5,
-    backgroundColor: "#818384",
+    backgroundColor: Colors.GRAY,
     maxHeight: 60,
     display: "flex",
     justifyContent: "center",
     alignItems: "center"
   },
   cellDisabled: {
-    borderColor: "grey"
+    borderColor: Colors.GRAY,
+    backgroundColor: Colors.DARKGREY
   },
   text: {
-    color: "white",
+    color: Colors.WHITE,
     fontSize: 16,
     fontWeight: "bold",
     fontFamily: "Helvetica Neue",
     textTransform: "uppercase"
   },
   textDisabled: {
-    color: Colors.GRAY
+    color: Colors.WHITE
   }
 });
 

@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 
 import { Pressable, StyleSheet, Text, View } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { Colors } from "../../../Styles";
+import { Colors } from "../../../Settings";
 
 interface IModalInstructions {
   onClose: () => void;
