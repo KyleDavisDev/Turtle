@@ -1,6 +1,5 @@
 import { Pressable, StyleSheet, Text, View } from "react-native";
-import { HelpIcon } from "./components/HelpIcon/HelpIcon";
-import { CogIcon } from "./components/CogIcon/CogIcon";
+import { FontAwesome } from "@expo/vector-icons";
 
 interface IHeader {
   onInstructionsOpen: () => void;
@@ -14,14 +13,12 @@ const Header = (params: IHeader) => {
       <View style={styles.row}>
         <View style={styles.section}>
           <Pressable onPress={() => onInstructionsOpen()}>
-            <Text>Howdy</Text>
-            {/*<HelpIcon />*/}
+            <FontAwesome name="question-circle-o" size={24} color="black" />
           </Pressable>
         </View>
         <View style={styles.section}>
           <Pressable>
-            <Text>Howdy</Text>
-            {/*<CogIcon />*/}
+            <FontAwesome name="cog" size={24} color="black" />
           </Pressable>
         </View>
       </View>
