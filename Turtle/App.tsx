@@ -7,6 +7,7 @@ import { ModalWinner } from "./src/components/Modals/ModalWinner/ModalWinner";
 import { ModalInstructions } from "./src/components/Modals/ModalInstructions/ModalInstructions";
 import { IGame } from "./src/BLL/Game/IGame";
 import { Colors } from "./src/Settings";
+import { ModalOptions } from "./src/components/Modals/ModalOptions/ModalOptions";
 
 
 const factory = new GameFactory();
@@ -14,7 +15,8 @@ const newGame = factory.spanishMode();
 export default function App() {
   const [game, setGame] = useState<IGame>(newGame);
   const [isWinner, setIsWinner] = useState<boolean>(false);
-  const [displayInstructions, setDisplayInstructions] = useState<boolean>(false);
+  const [displayInstructions, setDisplayInstructions] = useState<boolean>(true);
+  const [displayOptions, setDisplayOptions] = useState<boolean | null>(null);
   const [pauseGame, setPauseGame] = useState<boolean>(false);
   const [resetGame, setResetGame] = useState<boolean | null>(null);
 
@@ -29,6 +31,14 @@ export default function App() {
   };
   const onInstructionsOpen = () => {
     setDisplayInstructions(true);
+    setPauseGame(true);
+  };
+  const onOptionsClose = () => {
+    setDisplayOptions(false);
+    setPauseGame(false);
+  };
+  const onOptionsOpen = () => {
+    setDisplayOptions(true);
     setPauseGame(true);
   };
 
@@ -57,7 +67,9 @@ export default function App() {
   return (
     <View style={styles.container}>
       <Header onInstructionsOpen={onInstructionsOpen} />
-      {displayInstructions && <ModalInstructions onClose={onInstructionsClose} shouldDisplay={displayInstructions} />}
+      <ModalInstructions onClose={onInstructionsClose} shouldDisplay={displayInstructions} />
+      {displayOptions &&
+        <ModalOptions onGameModeSelect={onNewGameModeSelect} onClose={onOptionsClose} shouldDisplay={displayOptions} />}
       {isWinner && <ModalWinner onGameModeSelect={onNewGameModeSelect} />}
       <Game gameBLL={game} onWin={onWinner} pauseGame={pauseGame} resetGame={resetGame} />
     </View>

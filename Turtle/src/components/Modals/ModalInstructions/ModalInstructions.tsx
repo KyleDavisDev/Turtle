@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 
 import { Pressable, StyleSheet, Text, View } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -11,38 +11,42 @@ interface IModalInstructions {
 
 const ModalInstructions = (props: IModalInstructions) => {
   const { onClose, shouldDisplay } = props;
+  console.log(shouldDisplay);
+
+  const [hasCookie, setHasCookie] = useState<boolean>(false);
 
   const onModalClose = async () => {
-    await rememberInstructionsHaveBeenSeen();
+    await setInstructionHaveBeenSeen();
     onClose();
   };
-  const rememberInstructionsHaveBeenSeen = async () => {
+
+  const setInstructionHaveBeenSeen = async () => {
     try {
       await AsyncStorage.setItem("@haveInstructionsBeenSeen", "true");
+      setHasCookie(true);
     } catch (e) {
       // saving error
     }
   };
 
+
   useEffect(() => {
-    const getHasAlreadyBeenSeen = async () => {
+    const getHaveInstructionsBeenSeen = async () => {
       try {
         const value = await AsyncStorage.getItem("@haveInstructionsBeenSeen");
         if (value !== null) {
+          setHasCookie(true);
           onClose();
         }
       } catch (e) {
         // error reading value
       }
     };
-
-    if (shouldDisplay) {
-    } else {
-      getHasAlreadyBeenSeen();
-    }
+    getHaveInstructionsBeenSeen();
   }, []);
 
-  if (!shouldDisplay) {
+  
+  if (hasCookie && !shouldDisplay) {
     return <></>;
   }
 
