@@ -88,6 +88,10 @@ class Game implements IGame {
     return this._boardState;
   }
 
+  getWordLength() {
+    return this._wordToGuess.length;
+  }
+
   private removeLetterAtIndex = (s: string, i: number): string => {
     return s.slice(0, i) + s.slice(i + 1);
   };

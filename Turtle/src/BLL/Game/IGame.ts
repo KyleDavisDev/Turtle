@@ -4,4 +4,6 @@ export interface IGame {
   guessWord: (word: string) => GuessResponse[];
 
   getBoardState(): string[][];
+
+  getWordLength: () => number;
 }
