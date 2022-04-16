@@ -94,7 +94,7 @@ export default function App() {
                       guessLength={guessLength}
                       onClose={onOptionsClose}
                       shouldDisplay={displayOptions} />}
-      {isWinner && <ModalWinner onGameModeSelect={onNewGameModeSelect} />}
+      {isWinner && <ModalWinner onGameModeSelect={onNewGameModeSelect} tiles={game.getBoardState()} />}
       <Game gameBLL={game} onWin={onWinner} pauseGame={pauseGame} resetGame={resetGame} />
     </View>
   );
