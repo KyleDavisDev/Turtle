@@ -30,6 +30,7 @@ const Header = (params: IHeader) => {
           <Text style={[styles.title, { fontFamily: "Title" }]}>
             Turtle
           </Text>
+          <Text style={[styles.subTitle, { fontFamily: "Title" }]}> (...a Wordle clone)</Text>
         </View>
         <View style={styles.section}>
           <Pressable onPress={() => onOptionsOpen()}>
@@ -61,10 +62,15 @@ const styles = StyleSheet.create({
   },
   section: {
     display: "flex",
-    flexDirection: "row"
+    flexDirection: "row",
+    alignItems: "baseline"
   },
   title: {
     fontSize: 40,
+    color: Colors.WHITE
+  },
+  subTitle: {
+    fontSize: 15,
     color: Colors.WHITE
   }
 });
