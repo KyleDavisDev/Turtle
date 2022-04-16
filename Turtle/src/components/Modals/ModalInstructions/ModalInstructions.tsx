@@ -51,12 +51,13 @@ const ModalInstructions = (props: IModalInstructions) => {
   return (
     <View style={styles.overlay}>
       <View style={styles.container}>
-        <View style={styles.closeContainer}>
-          <Pressable onPress={() => onModalClose()}>
+        <View style={styles.header}>
+          <Text style={styles.h1}>How to Play</Text>
+          <Pressable style={styles.closeContainer} onPress={() => onClose()}>
             <Text style={styles.closeContainerText}>X</Text>
           </Pressable>
         </View>
-        <Text style={styles.h1}>How to Play</Text>
+
         <Text style={styles.text}>Guess the TURTLE in six tries.</Text>
 
         <Text style={styles.text}>Each guess must be a valid five-letter word. Hit the enter button to submit.</Text>
@@ -134,28 +135,32 @@ const styles = StyleSheet.create({
     borderColor: "#444",
     borderRadius: 5,
     backgroundColor: "#222",
-    color: "white"
+    color: Colors.WHITE
+  },
+  header: {
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
+    marginBottom: 10
   },
   closeContainer: {
-    display: "flex",
-    justifyContent: "flex-end",
-    alignItems: "flex-end"
+    position: "absolute",
+    right: 0
   },
   closeContainerText: {
-    color: "white",
+    color: Colors.WHITE,
     fontSize: 16,
     padding: 5
   },
   h1: {
-    color: "white",
     fontWeight: "bold",
+    color: Colors.WHITE,
     fontSize: 16,
-    textTransform: "uppercase",
-    textAlign: "center",
-    marginBottom: "10px"
+    textTransform: "uppercase"
   },
   text: {
-    color: "white",
+    color: Colors.WHITE,
     fontWeight: "bold",
     fontSize: 16,
     marginBottom: "10px"
@@ -183,7 +188,7 @@ const styles = StyleSheet.create({
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
-    color: "white",
+    color: Colors.WHITE,
     textTransform: "uppercase"
   },
   correctBox: {
@@ -195,7 +200,7 @@ const styles = StyleSheet.create({
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
-    color: "white",
+    color: Colors.WHITE,
     textTransform: "uppercase"
   },
   wrongSpotBox: {
@@ -207,7 +212,7 @@ const styles = StyleSheet.create({
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
-    color: "white",
+    color: Colors.WHITE,
     textTransform: "uppercase"
   },
   absentBox: {
@@ -219,7 +224,7 @@ const styles = StyleSheet.create({
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
-    color: "white",
+    color: Colors.WHITE,
     textTransform: "uppercase"
   }
 });
