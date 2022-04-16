@@ -32,18 +32,22 @@ enum gameModes {
 
 class GameFactory implements IGameFactory {
   private _gameModesSelected: gameModes[] = [];
+  private _settings: ISettings;
 
   constructor() {
+    this._settings = new Settings();
   }
 
   standardGame = (): IGame => {
-    const settings: ISettings = new Settings();
-    const newWordStrategy: INewWordStrategy = new NewWordFileStrategy({ possibleWords: scrabbleWords, settings });
+    const newWordStrategy: INewWordStrategy = new NewWordFileStrategy({
+      possibleWords: scrabbleWords,
+      settings: this._settings
+    });
     const validateWordStrat: IValidateWordStrategy = new ValidateWordFileStrategy({ possibleWords: scrabbleWords });
 
     const wordToGuess: string = newWordStrategy.getWord();
     console.log(wordToGuess);
-    const game: IGame = new Game({ wordToGuess, settings, validateWordStrategy: validateWordStrat });
+    const game: IGame = new Game({ wordToGuess, settings: this._settings, validateWordStrategy: validateWordStrat });
 
     this._gameModesSelected.push(gameModes.standard);
 
@@ -51,16 +55,17 @@ class GameFactory implements IGameFactory {
   };
 
   spanishMode = (): IGame => {
-    const settings: ISettings = new Settings();
-    // @ts-ignore
-    const newWordStrategy: INewWordStrategy = new NewWordFileStrategy({ possibleWords: spanishWords, settings });
+    const newWordStrategy: INewWordStrategy = new NewWordFileStrategy({
+      possibleWords: (spanishWords as string[]),
+      settings: this._settings
+    });
     // @ts-ignore
     const possibleWords: IValidateWordStrategy = new ValidateWordFileStrategy({ possibleWords: spanishWords });
 
     const wordToGuess: string = newWordStrategy.getWord();
     console.log(wordToGuess);
 
-    const game: IGame = new Game({ wordToGuess, settings, validateWordStrategy: possibleWords });
+    const game: IGame = new Game({ wordToGuess, settings: this._settings, validateWordStrategy: possibleWords });
 
     this._gameModesSelected.push(gameModes.spanish);
 
@@ -68,12 +73,14 @@ class GameFactory implements IGameFactory {
   };
 
   vanderbiltMode = (): IGame => {
-    const settings: ISettings = new Settings();
-    const newWordStrategy: INewWordStrategy = new NewWordFileStrategy({ possibleWords: vanderbiltWords, settings });
+    const newWordStrategy: INewWordStrategy = new NewWordFileStrategy({
+      possibleWords: vanderbiltWords,
+      settings: this._settings
+    });
     const wordToGuess: string = newWordStrategy.getWord();
     const possibleWords: IValidateWordStrategy = new ValidateWordFileStrategy({ possibleWords: scrabbleWords.concat(wordToGuess) });
 
-    const game: IGame = new Game({ wordToGuess, settings, validateWordStrategy: possibleWords });
+    const game: IGame = new Game({ wordToGuess, settings: this._settings, validateWordStrategy: possibleWords });
 
     this._gameModesSelected.push(gameModes.vanderbilt);
 
@@ -81,24 +88,25 @@ class GameFactory implements IGameFactory {
   };
 
   offlineMode = (): IGame => {
-    const settings: ISettings = new Settings();
-    const newWordStrategy: INewWordStrategy = new NewWordFileStrategy({ possibleWords: scrabbleWords, settings });
+    const newWordStrategy: INewWordStrategy = new NewWordFileStrategy({
+      possibleWords: scrabbleWords,
+      settings: this._settings
+    });
     const possibleWords: IValidateWordStrategy = new ValidateWordFileStrategy({ possibleWords: scrabbleWords });
 
     const wordToGuess: string = newWordStrategy.getWord();
-    const game: IGame = new Game({ wordToGuess, settings, validateWordStrategy: possibleWords });
+    const game: IGame = new Game({ wordToGuess, settings: this._settings, validateWordStrategy: possibleWords });
 
     this._gameModesSelected.push(gameModes.offline);
     return game;
   };
 
   onlineMode = (): IGame => {
-    const settings: ISettings = new Settings();
     const newWordStrategy: INewWordStrategy = new NewWordAPIStrategy();
     const possibleWords: IValidateWordStrategy = new ValidateWordAPIStrategy();
 
     const wordToGuess: string = newWordStrategy.getWord();
-    const game: IGame = new Game({ wordToGuess, settings, validateWordStrategy: possibleWords });
+    const game: IGame = new Game({ wordToGuess, settings: this._settings, validateWordStrategy: possibleWords });
 
     this._gameModesSelected.push(gameModes.online);
 
@@ -116,6 +124,12 @@ class GameFactory implements IGameFactory {
 
     return this.standardGame();
   };
+
+
+  setWordLength = (num: number): void => {
+    this._settings.setWordLength(num);
+  };
+
 }
 
 export { GameFactory };
