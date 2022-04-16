@@ -7,4 +7,6 @@ export interface IGameFactory {
   vanderbiltMode: () => IGame;
   onlineMode: () => IGame;
   newGame: () => IGame;
+
+  setWordLength: (num: number) => void;
 }
