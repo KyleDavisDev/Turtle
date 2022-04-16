@@ -129,6 +129,9 @@ class GameFactory implements IGameFactory {
   setWordLength = (num: number): void => {
     this._settings.setWordLength(num);
   };
+  setGuessLength = (num: number): void => {
+    this._settings.setMaxGuesses(num);
+  };
 
 }
 

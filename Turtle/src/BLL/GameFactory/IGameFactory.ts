@@ -9,4 +9,5 @@ export interface IGameFactory {
   newGame: () => IGame;
 
   setWordLength: (num: number) => void;
+  setGuessLength: (num: number) => void;
 }
