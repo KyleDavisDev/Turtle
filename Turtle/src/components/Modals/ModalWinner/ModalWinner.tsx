@@ -13,6 +13,7 @@ const ModalWinner = (params: IModalProps) => {
   const { onGameModeSelect, tiles } = params;
 
   const onShareResults = () => {
+
     const textToClipboard = tiles.map(column => {
       const row = column.map(cell => {
         if (cell === "/") {
@@ -23,10 +24,13 @@ const ModalWinner = (params: IModalProps) => {
           return "🟩";
         }
       }).join("");
-      return row + "\n";
+      if (row.length > 0) return row + "\n";
+
+      return;
     });
 
-    Clipboard.setString(textToClipboard.join(""));
+    const prefix = "Turtle " + (textToClipboard.join("").match(/\n/g) || []).length + "/" + textToClipboard.length + "\n\n";
+    Clipboard.setString(prefix + textToClipboard.join(""));
   };
 
   return (
