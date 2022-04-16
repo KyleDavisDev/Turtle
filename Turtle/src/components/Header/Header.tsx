@@ -1,5 +1,7 @@
 import { Pressable, StyleSheet, Text, View } from "react-native";
 import { FontAwesome } from "@expo/vector-icons";
+import { Colors } from "../../Settings";
+import { useFonts } from "expo-font";
 
 interface IHeader {
   onInstructionsOpen: () => void;
@@ -7,18 +9,30 @@ interface IHeader {
 
 const Header = (params: IHeader) => {
   const { onInstructionsOpen } = params;
+  const [loaded] = useFonts({
+    Title: require("../../../assets/fonts/karnakcondensed-700.woff2")
+  });
+
+  if (!loaded) {
+    return <></>;
+  }
 
   return (
     <View style={styles.container}>
       <View style={styles.row}>
         <View style={styles.section}>
           <Pressable onPress={() => onInstructionsOpen()}>
-            <FontAwesome name="question-circle-o" size={24} color="black" />
+            <FontAwesome name="question-circle-o" size={24} color={Colors.WHITE} />
           </Pressable>
         </View>
         <View style={styles.section}>
-          <Pressable>
-            <FontAwesome name="cog" size={24} color="black" />
+          <Text style={[styles.title, { fontFamily: "Title" }]}>
+            Turtle
+          </Text>
+        </View>
+        <View style={styles.section}>
+          <Pressable onPress={() => onInstructionsOpen()}>
+            <FontAwesome name="cog" size={24} color={Colors.WHITE} />
           </Pressable>
         </View>
       </View>
@@ -28,9 +42,8 @@ const Header = (params: IHeader) => {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: "blue",
     width: "100%",
-    borderBottomColor: "#222",
+    borderBottomColor: Colors.DARKGREY,
     borderBottomWidth: 2,
     marginBottom: 10,
     display: "flex",
@@ -48,6 +61,10 @@ const styles = StyleSheet.create({
   section: {
     display: "flex",
     flexDirection: "row"
+  },
+  title: {
+    fontSize: 40,
+    color: Colors.WHITE
   }
 });
 
