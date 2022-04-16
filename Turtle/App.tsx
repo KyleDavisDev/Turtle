@@ -11,10 +11,11 @@ import { ModalOptions } from "./src/components/Modals/ModalOptions/ModalOptions"
 
 
 const factory = new GameFactory();
-const newGame = factory.spanishMode();
+const newGame = factory.standardGame();
 export default function App() {
   const [game, setGame] = useState<IGame>(newGame);
   const [wordLength, setWordLength] = useState<number>(newGame.getWordLength());
+  const [guessLength, setGuessLength] = useState<number>(5);
   const [isWinner, setIsWinner] = useState<boolean>(false);
   const [displayInstructions, setDisplayInstructions] = useState<boolean>(true);
   const [displayOptions, setDisplayOptions] = useState<boolean>(false);
@@ -74,6 +75,12 @@ export default function App() {
     setWordLength(e);
     factory.setWordLength(e);
   };
+  const onGuessLength = (e: number): void => {
+    if (e < 1 || e > 9) return;
+
+    setGuessLength(e);
+    factory.setGuessLength(e);
+  };
 
   return (
     <View style={styles.container}>
@@ -82,7 +89,11 @@ export default function App() {
       {displayOptions &&
         <ModalOptions onGameModeSelect={onNewGameModeSelect}
                       wordLength={wordLength}
-                      onLengthChange={onLengthChange} onClose={onOptionsClose} shouldDisplay={displayOptions} />}
+                      onLengthChange={onLengthChange}
+                      onGuessLength={onGuessLength}
+                      guessLength={guessLength}
+                      onClose={onOptionsClose}
+                      shouldDisplay={displayOptions} />}
       {isWinner && <ModalWinner onGameModeSelect={onNewGameModeSelect} />}
       <Game gameBLL={game} onWin={onWinner} pauseGame={pauseGame} resetGame={resetGame} />
     </View>
