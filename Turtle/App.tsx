@@ -6,6 +6,8 @@ import { Game } from "./src/components/Game/Game";
 import { ModalWinner } from "./src/components/Modals/ModalWinner/ModalWinner";
 import { ModalInstructions } from "./src/components/Modals/ModalInstructions/ModalInstructions";
 import { IGame } from "./src/BLL/Game/IGame";
+import { Colors } from "./src/Settings";
+
 
 const factory = new GameFactory();
 const newGame = factory.spanishMode();
@@ -65,7 +67,7 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#222",
+    backgroundColor: Colors.BLACK,
     alignItems: "center"
   }
 });
