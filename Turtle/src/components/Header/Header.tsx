@@ -5,10 +5,11 @@ import { useFonts } from "expo-font";
 
 interface IHeader {
   onInstructionsOpen: () => void;
+  onOptionsOpen: () => void;
 }
 
 const Header = (params: IHeader) => {
-  const { onInstructionsOpen } = params;
+  const { onInstructionsOpen, onOptionsOpen } = params;
   const [loaded] = useFonts({
     Title: require("../../../assets/fonts/karnakcondensed-700.woff2")
   });
@@ -31,7 +32,7 @@ const Header = (params: IHeader) => {
           </Text>
         </View>
         <View style={styles.section}>
-          <Pressable onPress={() => onInstructionsOpen()}>
+          <Pressable onPress={() => onOptionsOpen()}>
             <FontAwesome name="cog" size={24} color={Colors.WHITE} />
           </Pressable>
         </View>
