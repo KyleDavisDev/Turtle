@@ -68,6 +68,10 @@ class Game implements IGame {
     this._boardState[this._curRow] = results;
     this._curRow += 1;
 
+    if (this._curRow === this._settings.getMaxGuesses()) {
+      this._didNotWin();
+    }
+
     return results;
   }
 
@@ -98,6 +102,10 @@ class Game implements IGame {
   };
 
   private _winnerWinnerChickenDinner() {
+    // Should I need to do anything here?
+  }
+
+  private _didNotWin() {
     // Should I need to do anything here?
   }
 }
