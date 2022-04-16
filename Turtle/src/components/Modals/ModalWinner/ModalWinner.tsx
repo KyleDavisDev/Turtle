@@ -1,37 +1,58 @@
 import React from "react";
 import { StyleSheet, Text, View, Pressable } from "react-native";
+import * as Clipboard from "expo-clipboard";
+import { Entypo } from "@expo/vector-icons";
 import { Colors } from "../../../Settings";
 
 export interface IModalProps {
   onGameModeSelect: (mode: string) => void;
+  tiles: string[][];
 }
 
 const ModalWinner = (params: IModalProps) => {
-  const { onGameModeSelect } = params;
+  const { onGameModeSelect, tiles } = params;
+
+  const onShareResults = () => {
+    const textToClipboard = tiles.map(column => {
+      const row = column.map(cell => {
+        if (cell === "/") {
+          return "⬛";
+        } else if (cell === "Y") {
+          return "🟨";
+        } else if (cell === "G") {
+          return "🟩";
+        }
+      }).join("");
+      return row + "\n";
+    });
+
+    Clipboard.setString(textToClipboard.join(""));
+  };
 
   return (
     <View style={styles.overlay}>
       <View style={styles.container}>
         <Text style={styles.h1}>Winner!</Text>
 
-        <View style={{}}>
-          <button id="share-button">Share results!</button>
-        </View>
+        <Pressable style={styles.button} onPress={onShareResults}>
+          <Text style={styles.buttonText}>Share results!<Entypo name="share" size={24} color={Colors.WHITE} /></Text>
+        </Pressable>
 
         <View style={styles.options}>
           <View style={styles.option}>
             <Pressable style={styles.button} onPress={() => onGameModeSelect("Scrabble")}>
-              <Text>English Game</Text>
+              <Text style={styles.buttonText}>New English Game</Text>
             </Pressable>
           </View>
           <View style={styles.option}>
             <Pressable style={styles.button} onPress={() => onGameModeSelect("Spanish")}>
-              <Text>Spanish Game</Text>
+              <Text style={styles.buttonText}>
+                New Spanish Game</Text>
             </Pressable>
           </View>
           <View style={styles.option}>
             <Pressable style={styles.button} onPress={() => onGameModeSelect("Vanderbilt")}>
-              <Text>Vandy Game</Text>
+              <Text style={styles.buttonText}>New Vandy Game</Text>
             </Pressable>
           </View>
         </View>
@@ -51,8 +72,8 @@ const styles = StyleSheet.create({
     zIndex: 300
   },
   container: {
-    // width: 300,
-    maxWidth: 300,
+    width: "100%",
+    maxWidth: 450,
     padding: "10px",
     borderWidth: 1,
     borderColor: "#444",
@@ -79,12 +100,22 @@ const styles = StyleSheet.create({
     margin: "5px"
   },
   button: {
-    fontWeight: "bold",
     paddingTop: "10px",
     paddingBottom: "10px",
     paddingLeft: "15px",
     paddingRight: "15px",
-    backgroundColor: "rgb(39, 155, 78)"
+    backgroundColor: Colors.GREEN,
+    borderRadius: 5,
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center"
+  },
+  buttonText: {
+    fontSize: 18,
+    color: Colors.WHITE,
+    fontWeight: "bold"
+
   }
 });
 
