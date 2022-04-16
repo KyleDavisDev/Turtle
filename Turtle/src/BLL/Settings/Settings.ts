@@ -17,7 +17,7 @@ class Settings implements ISettings {
     if (val < 1 || val > 9) {
       throw new Error("The word size must be greater than 0 and less than 10.");
     }
-    
+
     this._wordLength = val;
   }
 

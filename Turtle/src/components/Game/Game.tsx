@@ -8,12 +8,13 @@ import { CELL_ANIMATION_DURATION, Colors } from "../../Settings";
 interface IGameProps {
   gameBLL: IGame;
   onWin: () => void;
+  onLoss: () => void;
   pauseGame: boolean;
   resetGame: boolean | null;
 }
 
 const Game = (props: IGameProps) => {
-  const { gameBLL, onWin, pauseGame, resetGame } = props;
+  const { gameBLL, onWin, pauseGame, resetGame, onLoss } = props;
 
   const newBoard = (game: IGame): ICell[][] => {
     return game.getBoardState().map(row => {
@@ -104,6 +105,14 @@ const Game = (props: IGameProps) => {
         }, CELL_ANIMATION_DURATION * wordToGuessLength);
         return;
       }
+
+      if (isGameOver(curRow)) {
+        setTimeout(() => {
+          setIsPaused(true);
+          onLoss();
+        }, CELL_ANIMATION_DURATION * wordToGuessLength);
+        return;
+      }
     } catch (e) {
       // TODO: What do we do here?
       setPulseCellAnimation(null);
@@ -140,6 +149,10 @@ const Game = (props: IGameProps) => {
 
   const onIsWinner = () => {
     onWin();
+  };
+
+  const isGameOver = (curRow: number) => {
+    return (curRow + 1) === boardFrame.length;
   };
 
   useEffect(() => {

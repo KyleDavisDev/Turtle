@@ -16,14 +16,22 @@ export default function App() {
   const [game, setGame] = useState<IGame>(newGame);
   const [wordLength, setWordLength] = useState<number>(newGame.getWordLength());
   const [guessLength, setGuessLength] = useState<number>(5);
-  const [isWinner, setIsWinner] = useState<boolean>(false);
+  const [displayWinner, setDisplayWinner] = useState<boolean>(false);
+  const [winnerText, setWinnerText] = useState<string>("");
   const [displayInstructions, setDisplayInstructions] = useState<boolean>(true);
   const [displayOptions, setDisplayOptions] = useState<boolean>(false);
   const [pauseGame, setPauseGame] = useState<boolean>(false);
   const [resetGame, setResetGame] = useState<boolean | null>(null);
 
   const onWinner = () => {
-    setIsWinner(true);
+    setDisplayWinner(true);
+    setWinnerText("Winner");
+    setPauseGame(true);
+  };
+
+  const onLoss = () => {
+    setDisplayWinner(true);
+    setWinnerText("Darn!");
     setPauseGame(true);
   };
 
@@ -64,7 +72,7 @@ export default function App() {
     setWordLength(game.getWordLength());
     setDisplayOptions(false);
     setDisplayInstructions(false);
-    setIsWinner(false);
+    setDisplayWinner(false);
     setPauseGame(false);
     setResetGame(!resetGame);
   };
@@ -94,8 +102,11 @@ export default function App() {
                       guessLength={guessLength}
                       onClose={onOptionsClose}
                       shouldDisplay={displayOptions} />}
-      {isWinner && <ModalWinner onGameModeSelect={onNewGameModeSelect} tiles={game.getBoardState()} />}
-      <Game gameBLL={game} onWin={onWinner} pauseGame={pauseGame} resetGame={resetGame} />
+      {displayWinner &&
+        <ModalWinner onGameModeSelect={onNewGameModeSelect}
+                     tiles={game.getBoardState()}
+                     title={winnerText} />}
+      <Game gameBLL={game} onWin={onWinner} onLoss={onLoss} pauseGame={pauseGame} resetGame={resetGame} />
     </View>
   );
 }

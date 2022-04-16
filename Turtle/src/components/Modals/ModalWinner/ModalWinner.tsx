@@ -7,10 +7,11 @@ import { Colors } from "../../../Settings";
 export interface IModalProps {
   onGameModeSelect: (mode: string) => void;
   tiles: string[][];
+  title: string;
 }
 
 const ModalWinner = (params: IModalProps) => {
-  const { onGameModeSelect, tiles } = params;
+  const { onGameModeSelect, tiles, title } = params;
 
   const onShareResults = () => {
 
@@ -36,7 +37,7 @@ const ModalWinner = (params: IModalProps) => {
   return (
     <View style={styles.overlay}>
       <View style={styles.container}>
-        <Text style={styles.h1}>Winner!</Text>
+        <Text style={styles.h1}>{title}</Text>
 
         <Pressable style={styles.button} onPress={onShareResults}>
           <Text style={styles.buttonText}>Share results!<Entypo name="share" size={24} color={Colors.WHITE} /></Text>
