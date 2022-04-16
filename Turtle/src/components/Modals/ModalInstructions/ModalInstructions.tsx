@@ -11,8 +11,6 @@ interface IModalInstructions {
 
 const ModalInstructions = (props: IModalInstructions) => {
   const { onClose, shouldDisplay } = props;
-  console.log(shouldDisplay);
-
   const [hasCookie, setHasCookie] = useState<boolean>(false);
 
   const onModalClose = async () => {
@@ -45,7 +43,7 @@ const ModalInstructions = (props: IModalInstructions) => {
     getHaveInstructionsBeenSeen();
   }, []);
 
-  
+
   if (hasCookie && !shouldDisplay) {
     return <></>;
   }
