@@ -21,7 +21,7 @@ const ModalWinner = (params: IModalProps) => {
         <View style={styles.options}>
           <View style={styles.option}>
             <Pressable style={styles.button} onPress={() => onGameModeSelect("Scrabble")}>
-              <Text>Scrabble Game</Text>
+              <Text>English Game</Text>
             </Pressable>
           </View>
           <View style={styles.option}>
