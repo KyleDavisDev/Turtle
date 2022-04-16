@@ -5,6 +5,7 @@ export enum Colors {
   "GREEN" = "rgb(39, 155, 78)",
   "GRAY" = "rgb(129, 131, 132)",
   "DARKGREY" = "rgb(58, 58, 60)",
+  "BLACK" = "rgb(18, 18, 19)",
   "YELLOW" = "rgb(187, 145, 18)",
   "WHITE" = "rgb(245, 245, 245)",
 }
