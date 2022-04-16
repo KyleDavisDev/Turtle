@@ -52,6 +52,7 @@ class Game implements IGame {
 
     // Check if person has guessed correctly
     if (wordToGuessCopy.length === 0) {
+      this._boardState[this._curRow] = results;
       this._winnerWinnerChickenDinner();
       return results;
     }
