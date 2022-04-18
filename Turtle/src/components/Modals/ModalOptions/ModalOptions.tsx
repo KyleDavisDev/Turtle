@@ -122,7 +122,7 @@ const styles = StyleSheet.create({
   container: {
     width: "100%",
     maxWidth: 450,
-    padding: "10px",
+    padding: 10,
     borderWidth: 1,
     borderRadius: 5,
     borderColor: "#444",
@@ -203,21 +203,21 @@ const styles = StyleSheet.create({
   },
 
   options: {
-    marginTop: "10px",
+    marginTop: 10,
     display: "flex",
     flexWrap: "wrap",
     flexDirection: "row",
     justifyContent: "center"
   },
   option: {
-    margin: "5px"
+    margin: 5
   },
   button: {
     fontWeight: "bold",
-    paddingTop: "10px",
-    paddingBottom: "10px",
-    paddingLeft: "15px",
-    paddingRight: "15px",
+    paddingTop: 10,
+    paddingBottom: 10,
+    paddingLeft: 15,
+    paddingRight: 15,
     backgroundColor: "rgb(39, 155, 78)"
   }
 

@@ -162,7 +162,7 @@ const styles = StyleSheet.create({
     color: Colors.WHITE,
     fontWeight: "bold",
     fontSize: 16,
-    marginBottom: "10px"
+    marginBottom: 10
   },
   examples: {
     borderTopWidth: 1,

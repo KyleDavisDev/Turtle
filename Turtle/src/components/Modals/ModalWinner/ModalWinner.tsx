@@ -79,7 +79,7 @@ const styles = StyleSheet.create({
   container: {
     width: "100%",
     maxWidth: 450,
-    padding: "10px",
+    padding: 10,
     borderWidth: 1,
     borderColor: "#444",
     borderRadius: 5,
@@ -92,23 +92,23 @@ const styles = StyleSheet.create({
     fontSize: 16,
     textTransform: "uppercase",
     textAlign: "center",
-    marginBottom: "10px"
+    marginBottom: 10
   },
   options: {
-    marginTop: "10px",
+    marginTop: 10,
     display: "flex",
     flexWrap: "wrap",
     flexDirection: "row",
     justifyContent: "center"
   },
   option: {
-    margin: "5px"
+    margin: 5
   },
   button: {
-    paddingTop: "10px",
-    paddingBottom: "10px",
-    paddingLeft: "15px",
-    paddingRight: "15px",
+    paddingTop: 10,
+    paddingBottom: 10,
+    paddingLeft: 15,
+    paddingRight: 15,
     backgroundColor: Colors.GREEN,
     borderRadius: 5,
     display: "flex",
