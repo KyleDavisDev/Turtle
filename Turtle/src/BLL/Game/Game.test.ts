@@ -36,7 +36,7 @@ describe("Game", () => {
     // Given
     const guess = "test";
     const moqSettings = createMock<ISettings>();
-    moqSettings.getWordLength = guess.length + 1;
+    moqSettings.getWordLength = () => guess.length + 1;
     const moqWordValidationStrat = createMock<IValidateWordStrategy>();
     const wordToGuess = "temp";
     const params: IGameParams = { settings: moqSettings, wordToGuess, validateWordStrategy: moqWordValidationStrat };
@@ -51,7 +51,7 @@ describe("Game", () => {
     // Given
     const guess = "test";
     const moqSettings = createMock<ISettings>();
-    moqSettings.getWordLength = guess.length - 1;
+    moqSettings.getWordLength = () => guess.length - 1;
     const moqWordValidationStrat = createMock<IValidateWordStrategy>();
     const wordToGuess = "temp";
     const params: IGameParams = { settings: moqSettings, wordToGuess, validateWordStrategy: moqWordValidationStrat };
