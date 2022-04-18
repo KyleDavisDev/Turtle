@@ -45,7 +45,7 @@ const ModalInstructions = (props: IModalInstructions) => {
 
 
   if (hasCookie && !shouldDisplay) {
-    return <></>;
+    return null;
   }
 
   return (
@@ -67,9 +67,8 @@ const ModalInstructions = (props: IModalInstructions) => {
         </Text>
 
         <View style={styles.examples}>
-          <p>
-            <strong>Examples</strong>
-          </p>
+          <Text style={{ fontWeight: "bold" }}>Examples</Text>
+
           <View style={styles.example}>
             <View style={styles.row}>
               <Text style={styles.correctBox}>w</Text>
@@ -78,9 +77,9 @@ const ModalInstructions = (props: IModalInstructions) => {
               <Text style={styles.box}>r</Text>
               <Text style={styles.box}>y</Text>
             </View>
-            <p>
-              The letter <strong>W</strong> is in the word and in the correct spot.
-            </p>
+            <Text>
+              The letter <Text style={{ fontWeight: "bold" }}>W</Text> is in the word and in the correct spot.
+            </Text>
           </View>
           <View style={styles.example}>
             <View style={styles.row}>
@@ -90,9 +89,9 @@ const ModalInstructions = (props: IModalInstructions) => {
               <Text style={styles.box}>l</Text>
               <Text style={styles.box}>s</Text>
             </View>
-            <p>
-              The letter <strong>I</strong> is in the word but in the wrong spot.
-            </p>
+            <Text>
+              The letter <Text style={{ fontWeight: "bold" }}>I</Text> is in the word but in the wrong spot.
+            </Text>
           </View>
           <View style={styles.example}>
             <View style={styles.row}>
@@ -102,9 +101,9 @@ const ModalInstructions = (props: IModalInstructions) => {
               <Text style={styles.absentBox}>u</Text>
               <Text style={styles.box}>e</Text>
             </View>
-            <p>
-              The letter <strong>U</strong> is not in the word in any spot.
-            </p>
+            <Text>
+              The letter <Text style={{ fontWeight: "bold" }}>U</Text> is not in the word in any spot.
+            </Text>
           </View>
         </View>
 
@@ -130,7 +129,7 @@ const styles = StyleSheet.create({
   container: {
     width: "100%",
     maxWidth: 400,
-    padding: "10px",
+    padding: 10,
     borderWidth: 1,
     borderColor: "#444",
     borderRadius: 5,
