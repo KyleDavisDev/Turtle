@@ -94,18 +94,18 @@ export default function App() {
     <View style={styles.container}>
       <Header onInstructionsOpen={onInstructionsOpen} onOptionsOpen={onOptionsOpen} />
       <ModalInstructions onClose={onInstructionsClose} shouldDisplay={displayInstructions} />
-      {displayOptions &&
+      {displayOptions ?
         <ModalOptions onGameModeSelect={onNewGameModeSelect}
                       wordLength={wordLength}
                       onLengthChange={onLengthChange}
                       onGuessLength={onGuessLength}
                       guessLength={guessLength}
                       onClose={onOptionsClose}
-                      shouldDisplay={displayOptions} />}
-      {displayWinner &&
+                      shouldDisplay={displayOptions} /> : null}
+      {displayWinner ?
         <ModalWinner onGameModeSelect={onNewGameModeSelect}
                      tiles={game.getBoardState()}
-                     title={winnerText} />}
+                     title={winnerText} /> : null}
       <Game gameBLL={game} onWin={onWinner} onLoss={onLoss} pauseGame={pauseGame} resetGame={resetGame} />
     </View>
   );

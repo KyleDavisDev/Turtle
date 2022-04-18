@@ -85,7 +85,6 @@ const Row = (props: RowProps) => {
       {cells.map((cell, ind) => {
         const shakeCell2 = canAnimate && shakeCell && ind === curCellIndex;
         const flipCell2 = canAnimate && flipCell;
-        // const backgroundColor = cell.color;
 
         return (
           <Animated.View

@@ -11,7 +11,7 @@ interface IHeader {
 const Header = (params: IHeader) => {
   const { onInstructionsOpen, onOptionsOpen } = params;
   const [loaded] = useFonts({
-    Title: require("../../../assets/fonts/karnakcondensed-700.woff2")
+    Title: require("../../../assets/fonts/karnakcondensed-700.ttf")
   });
 
   if (!loaded) {

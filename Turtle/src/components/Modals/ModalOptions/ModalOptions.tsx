@@ -83,7 +83,7 @@ const ModalOptions = (params: IModalProps) => {
               <Text style={styles.sectionTitle}>Feedback?</Text>
             </View>
             <View style={styles.control}>
-              <Text>No Thanks</Text>
+              <Text style={styles.controlText}>No Thanks</Text>
             </View>
           </View>
           <View style={styles.setting}>
@@ -91,7 +91,7 @@ const ModalOptions = (params: IModalProps) => {
               <Text style={styles.sectionTitle}>Community</Text>
             </View>
             <View style={styles.control}>
-              <a href="https://twitter.com/NYTGames" target="blank" title="@NYTGames">Twitter</a>
+              <Text style={styles.controlText}>N/A</Text>
             </View>
           </View>
           <View style={styles.setting}>
@@ -99,9 +99,7 @@ const ModalOptions = (params: IModalProps) => {
               <Text style={styles.sectionTitle}>Questions?</Text>
             </View>
             <View style={styles.control}>
-              <a
-                href="https://help.nytimes.com/hc/en-us/articles/360029050872-Word-Games-and-Logic-Puzzles#h_01FVGCB2Z00ZQMDMCYWBPWJNXB"
-                target="blank">FAQ</a>
+              <Text style={styles.controlText}>N/A</Text>
             </View>
           </View>
 
@@ -174,6 +172,9 @@ const styles = StyleSheet.create({
     fontSize: 14
   },
   control: { display: "flex", flexDirection: "row", alignItems: "stretch" },
+  controlText: {
+    color: Colors.WHITE
+  },
   bumper: {
     backgroundColor: Colors.GRAY,
     color: Colors.WHITE,
