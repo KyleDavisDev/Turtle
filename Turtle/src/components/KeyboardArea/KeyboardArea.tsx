@@ -125,13 +125,7 @@ const KeyboardArea = (props: KeyboardAreaProps) => {
                   <View
                     style={[
                       styles.cell,
-                      {
-                        minWidth: windowWidth < 400 ? 28 : 45,
-                        minHeight: windowWidth < 400 ? 50 : 60,
-                        marginRight: windowWidth < 400 ? 3 : 5,
-                        marginLeft: windowWidth < 400 ? 3 : 5,
-                        marginBottom: windowWidth < 400 ? 4 : 8
-                      },
+                      windowWidth < 400 ? styles.smallCell : styles.bigCell,
                       { backgroundColor: bkColor }
                     ]}
                   >
@@ -173,6 +167,22 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center"
   },
+  smallCell: {
+    minWidth: 28,
+    minHeight: 50,
+    marginRight: 3,
+    marginLeft: 3,
+    marginBottom: 9,
+    padding: 9
+  },
+  bigCell: {
+    minWidth: 45,
+    minHeight: 60,
+    marginRight: 5,
+    marginLeft: 5,
+    marginBottom: 8
+  },
+
   cellDisabled: {
     borderColor: Colors.GRAY,
     backgroundColor: Colors.DARKGREY
