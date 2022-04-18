@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 
-import { Pressable, StyleSheet, Text, View } from "react-native";
+import { Dimensions, Pressable, StyleSheet, Text, View } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Colors } from "../../../Settings";
 
@@ -53,7 +53,7 @@ const ModalInstructions = (props: IModalInstructions) => {
       <View style={styles.container}>
         <View style={styles.header}>
           <Text style={styles.h1}>How to Play</Text>
-          <Pressable style={styles.closeContainer} onPress={() => onClose()}>
+          <Pressable style={styles.closeContainer} onPress={() => onModalClose()}>
             <Text style={styles.closeContainerText}>X</Text>
           </Pressable>
         </View>
@@ -67,7 +67,7 @@ const ModalInstructions = (props: IModalInstructions) => {
         </Text>
 
         <View style={styles.examples}>
-          <Text style={{ fontWeight: "bold" }}>Examples</Text>
+          <Text style={{ fontWeight: "bold", color: Colors.WHITE }}>Examples</Text>
 
           <View style={styles.example}>
             <View style={styles.row}>
@@ -77,8 +77,9 @@ const ModalInstructions = (props: IModalInstructions) => {
               <Text style={styles.box}>r</Text>
               <Text style={styles.box}>y</Text>
             </View>
-            <Text>
-              The letter <Text style={{ fontWeight: "bold" }}>W</Text> is in the word and in the correct spot.
+            <Text style={styles.exampleText}>
+              The letter <Text style={{ fontWeight: "bold", color: Colors.WHITE }}>W</Text> is in the word and in the
+              correct spot.
             </Text>
           </View>
           <View style={styles.example}>
@@ -89,8 +90,9 @@ const ModalInstructions = (props: IModalInstructions) => {
               <Text style={styles.box}>l</Text>
               <Text style={styles.box}>s</Text>
             </View>
-            <Text>
-              The letter <Text style={{ fontWeight: "bold" }}>I</Text> is in the word but in the wrong spot.
+            <Text style={styles.exampleText}>
+              The letter <Text style={{ fontWeight: "bold", color: Colors.WHITE }}>I</Text> is in the word but in the
+              wrong spot.
             </Text>
           </View>
           <View style={styles.example}>
@@ -101,8 +103,9 @@ const ModalInstructions = (props: IModalInstructions) => {
               <Text style={styles.absentBox}>u</Text>
               <Text style={styles.box}>e</Text>
             </View>
-            <Text>
-              The letter <Text style={{ fontWeight: "bold" }}>U</Text> is not in the word in any spot.
+            <Text style={styles.exampleText}>
+              The letter <Text style={{ fontWeight: "bold", color: Colors.WHITE }}>U</Text> is not in the word in any
+              spot.
             </Text>
           </View>
         </View>
@@ -117,11 +120,13 @@ const ModalInstructions = (props: IModalInstructions) => {
 
 const styles = StyleSheet.create({
   overlay: {
-    // cursor: "normal",
-    width: "100%",
-    height: "100vh",
+    width: Dimensions.get("window").width,
+    height: "100%",
+    alignSelf: "stretch",
     position: "absolute",
     backgroundColor: "rgba(0,0,0,.7)",
+    display: "flex",
+    flexDirection: "column",
     alignItems: "center",
     justifyContent: "center",
     zIndex: 300
@@ -173,6 +178,9 @@ const styles = StyleSheet.create({
   example: {
     marginTop: 12,
     marginBottom: 12
+  },
+  exampleText: {
+    color: Colors.WHITE
   },
   row: {
     display: "flex",
