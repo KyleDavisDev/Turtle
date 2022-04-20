@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet, Text, View, Pressable } from "react-native";
+import { StyleSheet, Text, View, Pressable, Dimensions } from "react-native";
 import * as Clipboard from "expo-clipboard";
 import { Entypo } from "@expo/vector-icons";
 import { Colors } from "../../../Settings";
@@ -68,23 +68,26 @@ const ModalWinner = (params: IModalProps) => {
 
 const styles = StyleSheet.create({
   overlay: {
-    width: "100%",
-    height: "100vh",
+    width: Dimensions.get("window").width,
+    height: "100%",
+    alignSelf: "stretch",
     position: "absolute",
     backgroundColor: "rgba(0,0,0,.7)",
+    display: "flex",
+    flexDirection: "column",
     alignItems: "center",
     justifyContent: "center",
     zIndex: 300
   },
   container: {
     width: "100%",
-    maxWidth: 450,
+    maxWidth: 400,
     padding: 10,
     borderWidth: 1,
     borderColor: "#444",
     borderRadius: 5,
     backgroundColor: "#222",
-    color: "white"
+    color: Colors.WHITE
   },
   h1: {
     fontWeight: "bold",

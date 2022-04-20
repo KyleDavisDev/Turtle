@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet, Text, View, Pressable, TextInput } from "react-native";
+import { StyleSheet, Text, View, Pressable, Dimensions } from "react-native";
 import { Colors } from "../../../Settings";
 
 export interface IModalProps {
@@ -111,23 +111,26 @@ const ModalOptions = (params: IModalProps) => {
 
 const styles = StyleSheet.create({
   overlay: {
-    width: "100%",
-    height: "100vh",
+    width: Dimensions.get("window").width,
+    height: "100%",
+    alignSelf: "stretch",
     position: "absolute",
     backgroundColor: "rgba(0,0,0,.7)",
+    display: "flex",
+    flexDirection: "column",
     alignItems: "center",
     justifyContent: "center",
     zIndex: 300
   },
   container: {
     width: "100%",
-    maxWidth: 450,
+    maxWidth: 400,
     padding: 10,
     borderWidth: 1,
-    borderRadius: 5,
     borderColor: "#444",
+    borderRadius: 5,
     backgroundColor: "#222",
-    color: "white"
+    color: Colors.WHITE
   },
   header: {
     display: "flex",
