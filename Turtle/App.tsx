@@ -1,18 +1,19 @@
 import { useState } from "react";
+import { StyleSheet, View, SafeAreaView } from "react-native";
+
 import { GameFactory } from "./src/BLL/GameFactory/GameFactory";
-import { StyleSheet, View } from "react-native";
+import { IGame } from "./src/BLL/Game/IGame";
+import { Colors } from "./src/Settings";
 import { Header } from "./src/components/Header/Header";
 import { Game } from "./src/components/Game/Game";
 import { ModalWinner } from "./src/components/Modals/ModalWinner/ModalWinner";
 import { ModalInstructions } from "./src/components/Modals/ModalInstructions/ModalInstructions";
-import { IGame } from "./src/BLL/Game/IGame";
-import { Colors } from "./src/Settings";
 import { ModalOptions } from "./src/components/Modals/ModalOptions/ModalOptions";
-
 
 const factory = new GameFactory();
 const newGame = factory.standardGame();
 export default function App() {
+  
   const [game, setGame] = useState<IGame>(newGame);
   const [wordLength, setWordLength] = useState<number>(newGame.getWordLength());
   const [guessLength, setGuessLength] = useState<number>(5);
@@ -28,13 +29,11 @@ export default function App() {
     setWinnerText("Winner");
     setPauseGame(true);
   };
-
   const onLoss = () => {
     setDisplayWinner(true);
     setWinnerText("Darn!");
     setPauseGame(true);
   };
-
   const onInstructionsClose = () => {
     setDisplayInstructions(false);
     setPauseGame(false);
@@ -51,7 +50,6 @@ export default function App() {
     setDisplayOptions(true);
     setPauseGame(true);
   };
-
   const onNewGameModeSelect = (mode: string): void => {
     // TODO: Adapter here?
     switch (mode.toLowerCase()) {
@@ -76,7 +74,6 @@ export default function App() {
     setPauseGame(false);
     setResetGame(!resetGame);
   };
-
   const onLengthChange = (e: number): void => {
     if (e < 1 || e > 9) return;
 
@@ -91,7 +88,9 @@ export default function App() {
   };
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={[styles.container]}>
+
+
       <Header onInstructionsOpen={onInstructionsOpen} onOptionsOpen={onOptionsOpen} />
       <ModalInstructions onClose={onInstructionsClose} shouldDisplay={displayInstructions} />
       {displayOptions ?
@@ -107,7 +106,8 @@ export default function App() {
                      tiles={game.getBoardState()}
                      title={winnerText} /> : null}
       <Game gameBLL={game} onWin={onWinner} onLoss={onLoss} pauseGame={pauseGame} resetGame={resetGame} />
-    </View>
+
+    </SafeAreaView>
   );
 }
 
