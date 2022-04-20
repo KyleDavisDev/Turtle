@@ -127,12 +127,11 @@ const styles = StyleSheet.create({
     justifyContent: "center"
   },
   cell: {
-    borderColor: "#3a3a3c",
+    borderColor: Colors.DARKGREY,
     borderWidth: 2,
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
-    padding: 10,
     margin: 5,
     width: 52,
     height: 52
