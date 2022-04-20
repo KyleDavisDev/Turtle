@@ -13,7 +13,7 @@ import { ModalOptions } from "./src/components/Modals/ModalOptions/ModalOptions"
 const factory = new GameFactory();
 const newGame = factory.standardGame();
 export default function App() {
-  
+
   const [game, setGame] = useState<IGame>(newGame);
   const [wordLength, setWordLength] = useState<number>(newGame.getWordLength());
   const [guessLength, setGuessLength] = useState<number>(5);
@@ -51,37 +51,41 @@ export default function App() {
     setPauseGame(true);
   };
   const onNewGameModeSelect = (mode: string): void => {
-    // TODO: Adapter here?
-    switch (mode.toLowerCase()) {
-      case "scrabble": {
-        setGame(factory.standardGame());
-        break;
+    try {
+      // TODO: Adapter here?
+      switch (mode.toLowerCase()) {
+        case "scrabble": {
+          setGame(factory.standardGame());
+          break;
+        }
+        case "spanish": {
+          setGame(factory.spanishMode());
+          break;
+        }
+        case "vanderbilt": {
+          setGame(factory.vanderbiltMode());
+          break;
+        }
       }
-      case "spanish": {
-        setGame(factory.spanishMode());
-        break;
-      }
-      case "vanderbilt": {
-        setGame(factory.vanderbiltMode());
-        break;
-      }
-    }
 
-    setWordLength(game.getWordLength());
-    setDisplayOptions(false);
-    setDisplayInstructions(false);
-    setDisplayWinner(false);
-    setPauseGame(false);
-    setResetGame(!resetGame);
+      setWordLength(game.getWordLength());
+      setDisplayOptions(false);
+      setDisplayInstructions(false);
+      setDisplayWinner(false);
+      setPauseGame(false);
+      setResetGame(!resetGame);
+    } catch (e) {
+
+    }
   };
   const onLengthChange = (e: number): void => {
-    if (e < 1 || e > 9) return;
+    if (e < 2 || e > 9) return;
 
     setWordLength(e);
     factory.setWordLength(e);
   };
   const onGuessLength = (e: number): void => {
-    if (e < 1 || e > 9) return;
+    if (e < 2 || e > 9) return;
 
     setGuessLength(e);
     factory.setGuessLength(e);
@@ -89,8 +93,6 @@ export default function App() {
 
   return (
     <SafeAreaView style={[styles.container]}>
-
-
       <Header onInstructionsOpen={onInstructionsOpen} onOptionsOpen={onOptionsOpen} />
       <ModalInstructions onClose={onInstructionsClose} shouldDisplay={displayInstructions} />
       {displayOptions ?
@@ -106,7 +108,6 @@ export default function App() {
                      tiles={game.getBoardState()}
                      title={winnerText} /> : null}
       <Game gameBLL={game} onWin={onWinner} onLoss={onLoss} pauseGame={pauseGame} resetGame={resetGame} />
-
     </SafeAreaView>
   );
 }
