@@ -191,7 +191,7 @@ const styles = StyleSheet.create({
     color: Colors.WHITE,
     fontSize: 16,
     fontWeight: "bold",
-    fontFamily: "Helvetica Neue",
+    // fontFamily: "Helvetica Neue",
     textTransform: "uppercase"
   },
   textDisabled: {

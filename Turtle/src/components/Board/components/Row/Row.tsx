@@ -139,7 +139,7 @@ const styles = StyleSheet.create({
   text: {
     fontSize: 30,
     fontWeight: "bold",
-    fontFamily: "Helvetica Neue",
+    // fontFamily: "Helvetica Neue",
     color: "white"
   }
 });
